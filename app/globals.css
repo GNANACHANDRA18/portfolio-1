@@ -1,0 +1,648 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------ */
+/*  Design tokens                                                      */
+/*                                                                     */
+/*  The site is dark end to end. These are the base values; the three  */
+/*  surface classes further down (.lux, .ai, .noir) re-declare the     */
+/*  colour tokens per route, so every utility (bg-bg, text-fg,         */
+/*  border-line …) follows the route without a second set of classes.  */
+/* ------------------------------------------------------------------ */
+
+@theme {
+  /* Neutral ramp — the spine of the dark identity. */
+  --color-bg: #050505;
+  --color-surface: #080808;
+  --color-elev: #101010;
+  --color-raised: #171717;
+  --color-fg: #f5f5f0;
+  --color-muted: #9a9a9a;
+  --color-faint: #6b6b6b;
+  --color-line: #222222;
+  --color-line-strong: #333333;
+
+  /* Warm gold reads as the default accent — luxurious, not neon. */
+  --color-accent: #e9b872;
+  --color-accent-deep: #b98a45;
+
+  /* Accent spectrum. Used selectively, never all at once. */
+  --color-ai-blue: #3b6bff;
+  --color-ai-cyan: #22d3ee;
+  --color-ai-violet: #8b5cf6;
+  --color-ai-magenta: #e5399b;
+  --color-ai-gold: #e9b872;
+  --color-ai-pink: #f0a6c8;
+  --color-ai-yellow: #e0b056;
+
+  /* Type */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-mono-jb), ui-monospace, SFMono-Regular, Menlo,
+    Consolas, monospace;
+
+  --text-display: clamp(2.75rem, 9vw, 8.5rem);
+  --text-hero: clamp(2.25rem, 6.5vw, 5.5rem);
+  --text-title: clamp(1.9rem, 4.2vw, 3.5rem);
+
+  /* Radius */
+  --radius-xs: 0.375rem;
+  --radius-sm: 0.625rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+
+  /* Motion — one vocabulary, used everywhere. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  --duration-fast: 180ms;
+  --duration-base: 320ms;
+  --duration-slow: 600ms;
+  --duration-page: 700ms;
+
+  /* Elevation. Dark surfaces take depth from shadow *and* hairline. */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 18px 44px -28px rgba(0, 0, 0, 0.9);
+  --shadow-lg: 0 34px 90px -46px rgba(0, 0, 0, 0.95);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Base                                                               */
+/* ------------------------------------------------------------------ */
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    color-scheme: dark;
+    background-color: #050505;
+  }
+
+  body {
+    /* SurfaceShell paints the real palette on top; this stops overscroll
+       flashing a bright strip. */
+    background-color: #050505;
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-accent) 32%, transparent);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #050505;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 99px;
+    border: 3px solid #050505;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #383838;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Utilities                                                          */
+/* ------------------------------------------------------------------ */
+
+@utility container-x {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 2.5rem;
+  }
+}
+
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+}
+
+@utility hairline {
+  border-top: 1px solid var(--color-line);
+}
+
+@utility glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-md);
+}
+
+@utility text-gradient {
+  background: linear-gradient(
+    178deg,
+    var(--color-fg) 24%,
+    color-mix(in oklab, var(--color-fg) 42%, transparent) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility accent-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--color-accent) 0%,
+    color-mix(in oklab, var(--color-accent) 62%, #fff) 55%,
+    var(--color-accent-deep) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Fine film grain, painted once over the whole document. On a dark ground it
+   has to lighten rather than multiply, or it only dims the page. */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain-shift 6s steps(6) infinite;
+}
+
+@keyframes grain-shift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-3%, 2%);
+  }
+  40% {
+    transform: translate(2%, -3%);
+  }
+  60% {
+    transform: translate(-2%, -2%);
+  }
+  80% {
+    transform: translate(3%, 1%);
+  }
+}
+
+/* Faint architectural grid used behind heroes. One definition, three names —
+   the older page-specific classes are kept so existing markup still works. */
+.grid-lines,
+.ai-grid,
+.noir-grid {
+  background-image: linear-gradient(
+      to right,
+      var(--color-line) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, var(--color-line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 34%,
+    #000 16%,
+    transparent 78%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 34%,
+    #000 16%,
+    transparent 78%
+  );
+}
+
+.glow-accent {
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    color-mix(in oklab, var(--color-accent) 24%, transparent) 0%,
+    transparent 70%
+  );
+}
+
+/* Hover sheen for cards. */
+.card-sheen {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.card-sheen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-out-expo);
+  background: radial-gradient(
+    460px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(255, 255, 255, 0.06),
+    transparent 62%
+  );
+}
+.card-sheen:hover::before {
+  opacity: 1;
+}
+
+/* Section-level grain. Both variants lighten. */
+.ai-noise::before,
+.noir-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ------------------------------------------------------------------ */
+/*  THE SIGNAL                                                         */
+/*                                                                     */
+/*  One recurring motif: a pulse of light travelling along a hairline. */
+/*  It marks section edges, the header, the footer and page changes,   */
+/*  so the whole site reads as a single system.                        */
+/* ------------------------------------------------------------------ */
+
+@keyframes signal-run {
+  0% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  74% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(520%);
+    opacity: 0;
+  }
+}
+
+.signal-rail {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-line);
+}
+
+.signal-rail::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 18%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-accent),
+    transparent
+  );
+  animation: signal-run var(--signal-duration, 7s) var(--ease-in-out-soft)
+    infinite;
+  animation-delay: var(--signal-delay, 0s);
+}
+
+@keyframes signal-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
+
+.signal-dot {
+  animation: signal-pulse 2.8s var(--ease-in-out-soft) infinite;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Surfaces                                                           */
+/* ------------------------------------------------------------------ */
+
+/* Default surface — warm gold accent over near-black. */
+.lux {
+  --color-accent: #e9b872;
+  --color-accent-deep: #b98a45;
+}
+
+/* /ai — a cooler, deeper room. Blue-violet leads instead of gold. */
+.ai {
+  --color-bg: #050509;
+  --color-surface: #09090f;
+  --color-elev: #101018;
+  --color-raised: #17171f;
+  --color-line: rgba(255, 255, 255, 0.09);
+  --color-line-strong: rgba(255, 255, 255, 0.18);
+  --color-accent: #3b6bff;
+  --color-accent-deep: #8b5cf6;
+}
+
+/* /marketing — flat, editorial, business-first. */
+.noir {
+  --color-bg: #050505;
+  --color-surface: #0a0a0a;
+  --color-elev: #101010;
+  --color-raised: #161616;
+  --color-line: #222222;
+  --color-line-strong: #333333;
+  --color-accent: #3b6bff;
+  --color-accent-deep: #8b5cf6;
+}
+
+/* A lighter band nested inside a dark page — used for contrast breaks. */
+.ai-dark {
+  --color-bg: #0a0a10;
+  --color-surface: #101018;
+  --color-elev: #17171f;
+  --color-raised: #1e1e28;
+  --color-line: rgba(255, 255, 255, 0.11);
+  --color-line-strong: rgba(255, 255, 255, 0.2);
+}
+
+/* Paints the surface. Kept in the base layer so utilities can still override
+   it — the header, for example, wants the tokens but no background. */
+@layer base {
+  .ai-surface,
+  .ai-dark,
+  .noir {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+  }
+
+  .ai-surface {
+    position: relative;
+    isolation: isolate;
+  }
+}
+
+.ai ::selection,
+.noir ::selection {
+  background: color-mix(in oklab, var(--color-ai-violet) 42%, transparent);
+  color: #fff;
+}
+
+/* Spectrum text fill used for hero and section headlines. */
+.ai-spectrum {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-ai-blue) 0%,
+    var(--color-ai-violet) 26%,
+    var(--color-ai-magenta) 50%,
+    var(--color-ai-cyan) 76%,
+    var(--color-ai-blue) 100%
+  );
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: spectrum-drift 12s linear infinite;
+}
+
+/* Gold counterpart, for pages that lead with the warm accent. */
+.lux-spectrum {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-accent-deep) 0%,
+    var(--color-accent) 30%,
+    #fff6e2 52%,
+    var(--color-accent) 74%,
+    var(--color-accent-deep) 100%
+  );
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: spectrum-drift 14s linear infinite;
+}
+
+@keyframes spectrum-drift {
+  to {
+    background-position: 260% 0;
+  }
+}
+
+/* Slow-moving blurred colour fields behind sections. */
+.aurora {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.42;
+  will-change: transform;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .aurora {
+    filter: blur(110px);
+  }
+}
+
+@keyframes aurora-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(6%, -8%, 0) scale(1.14);
+  }
+  66% {
+    transform: translate3d(-7%, 5%, 0) scale(0.92);
+  }
+}
+
+@keyframes aurora-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1.05);
+  }
+  40% {
+    transform: translate3d(-9%, 7%, 0) scale(0.9);
+  }
+  75% {
+    transform: translate3d(5%, 9%, 0) scale(1.18);
+  }
+}
+
+.aurora-a {
+  animation: aurora-a 22s ease-in-out infinite;
+}
+.aurora-b {
+  animation: aurora-b 27s ease-in-out infinite;
+}
+.aurora-c {
+  animation: aurora-a 32s ease-in-out infinite reverse;
+}
+
+/* Site-wide atmosphere. Two light fields lag behind the pointer; the grid
+   gives large flat areas a sense of scale. Both stay very low contrast. */
+.ambient-light {
+  background:
+    radial-gradient(
+      42vw 42vw at var(--amb-x, 50%) var(--amb-y, 35%),
+      color-mix(in oklab, var(--color-accent) 9%, transparent),
+      transparent 68%
+    ),
+    radial-gradient(
+      34vw 34vw at calc(100% - var(--amb-x, 50%)) calc(100% - var(--amb-y, 35%)),
+      color-mix(in oklab, var(--color-ai-violet) 8%, transparent),
+      transparent 70%
+    );
+}
+
+.ambient-grid {
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.028) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+  background-size: 96px 96px;
+  mask-image: radial-gradient(
+    60vw 60vw at var(--amb-x, 50%) var(--amb-y, 35%),
+    #000 0%,
+    transparent 72%
+  );
+  -webkit-mask-image: radial-gradient(
+    60vw 60vw at var(--amb-x, 50%) var(--amb-y, 35%),
+    #000 0%,
+    transparent 72%
+  );
+}
+
+/* Continuous horizontal marquee. */
+@keyframes marquee-drift {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee-drift var(--marquee-duration, 42s) linear infinite;
+  will-change: transform;
+}
+
+.marquee-track.reverse {
+  animation-direction: reverse;
+}
+
+/* Tool orbit — ring turns, chips counter-turn so labels stay upright. */
+@keyframes orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.orbit-ring {
+  animation: orbit-spin 46s linear infinite;
+}
+.orbit-chip {
+  animation: orbit-spin 46s linear infinite reverse;
+}
+.orbit-stage:hover .orbit-ring,
+.orbit-stage:hover .orbit-chip,
+.orbit-stage:focus-within .orbit-ring,
+.orbit-stage:focus-within .orbit-chip {
+  animation-play-state: paused;
+}
+
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -1000;
+  }
+}
+
+.dash-flow {
+  stroke-dasharray: 5 9;
+  animation: dash-flow 18s linear infinite;
+}
+
+/* Desktop pointer devices get the custom cursor; hide the native one.
+   Any themed surface can opt in with data-cursor-host. */
+@media (hover: hover) and (pointer: fine) {
+  [data-cursor-host],
+  [data-cursor-host] * {
+    cursor: none !important;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Reduced motion                                                     */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .grain::after,
+  .aurora,
+  .ai-spectrum,
+  .lux-spectrum,
+  .dash-flow,
+  .orbit-ring,
+  .orbit-chip,
+  .marquee-track,
+  .signal-dot {
+    animation: none !important;
+  }
+  .signal-rail::after {
+    animation: none !important;
+    opacity: 0;
+  }
+  [data-cursor-host],
+  [data-cursor-host] * {
+    cursor: auto !important;
+  }
+}
