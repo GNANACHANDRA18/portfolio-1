@@ -79,6 +79,12 @@ export default function Footer() {
               {site.instagram.handle}
             </a>
             <a
+              href={site.email.href}
+              className="font-mono text-[13px] text-muted transition-colors duration-300 hover:text-accent"
+            >
+              {site.email.display}
+            </a>
+            <a
               href={`tel:${site.phone.tel}`}
               className="font-mono text-[13px] text-muted transition-colors duration-300 hover:text-accent"
             >

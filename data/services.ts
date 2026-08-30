@@ -116,3 +116,20 @@ export const projectTypes = [
   'Branding',
   'Other',
 ];
+
+/** Optional qualifiers on the contact form. Free-form ranges, not a price list. */
+export const budgetRanges = [
+  'Not sure yet',
+  'Under 50k',
+  '50k - 1.5L',
+  '1.5L - 5L',
+  '5L+',
+];
+
+export const timelines = [
+  'Not sure yet',
+  'As soon as possible',
+  '2-4 weeks',
+  '1-3 months',
+  '3 months or more',
+];

@@ -51,9 +51,11 @@ export const personJsonLd = {
   jobTitle: ['Software Developer', 'CMO', 'AI Practitioner'],
   image: `${site.url}${site.portrait.src}`,
   telephone: site.phone.tel,
+  email: site.email.display,
   contactPoint: {
     '@type': 'ContactPoint',
     telephone: site.phone.tel,
+    email: site.email.display,
     contactType: 'business',
     areaServed: 'IN',
     availableLanguage: ['en'],

@@ -79,9 +79,28 @@ export default function ContactPage() {
                   </p>
 
                   <a
-                    href={`tel:${site.phone.tel}`}
+                    href={site.email.href}
                     data-cursor="magnet"
                     className="group flex items-center justify-between gap-4 border-b border-line pb-4"
+                  >
+                    <span>
+                      <span className="block text-[12px] text-faint">Email</span>
+                      <span className="mt-1 block font-mono text-[15px] text-fg transition-colors duration-300 group-hover:text-accent">
+                        {site.email.display}
+                      </span>
+                    </span>
+                    <span
+                      aria-hidden
+                      className="text-muted transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent"
+                    >
+                      &rarr;
+                    </span>
+                  </a>
+
+                  <a
+                    href={`tel:${site.phone.tel}`}
+                    data-cursor="magnet"
+                    className="group flex items-center justify-between gap-4 border-b border-line py-4"
                   >
                     <span>
                       <span className="block text-[12px] text-faint">Phone</span>

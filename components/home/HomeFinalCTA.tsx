@@ -129,6 +129,10 @@ export default function HomeFinalCTA() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mt-14 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-[11px] tracking-[0.16em] text-muted"
         >
+          <a href={site.email.href} className="transition-colors hover:text-accent">
+            {site.email.display}
+          </a>
+          <span aria-hidden className="h-1 w-1 rounded-full bg-line-strong" />
           <a
             href={`tel:${site.phone.tel}`}
             className="transition-colors hover:text-accent"

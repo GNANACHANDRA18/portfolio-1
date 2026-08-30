@@ -62,7 +62,7 @@ export default function DigitalIdCard() {
         style={
           reduce ? undefined : { rotateX, rotateY, transformStyle: 'preserve-3d' }
         }
-        className="relative overflow-hidden rounded-[26px] border border-line bg-surface shadow-[0_40px_110px_-50px_rgba(20,20,70,0.5)]"
+        className="relative overflow-hidden rounded-[26px] border border-line bg-surface shadow-[0_40px_110px_-50px_rgba(0,0,0,0.85)]"
       >
         {/* Holographic wash + pointer sheen */}
         {!reduce && (

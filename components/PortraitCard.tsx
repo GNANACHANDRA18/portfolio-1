@@ -124,6 +124,25 @@ export default function PortraitCard({
 
             <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-white/10 pt-4">
               <a
+                href={site.email.href}
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/12 bg-white/5 px-3 py-1.5 font-mono text-[11.5px] text-fg/90 transition-colors duration-300 hover:border-accent/50 hover:text-accent"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden
+                  className="h-3 w-3"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.7"
+                  strokeLinejoin="round"
+                >
+                  <rect x="3" y="5.5" width="18" height="13" rx="2.5" />
+                  <path d="m3.6 6.8 8.4 6 8.4-6" />
+                </svg>
+                {site.email.display}
+              </a>
+
+              <a
                 href={`tel:${site.phone.tel}`}
                 className="inline-flex items-center gap-1.5 rounded-full border border-white/12 bg-white/5 px-3 py-1.5 font-mono text-[11.5px] text-fg/90 transition-colors duration-300 hover:border-accent/50 hover:text-accent"
               >

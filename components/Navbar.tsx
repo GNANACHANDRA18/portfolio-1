@@ -20,7 +20,6 @@ const BAR = [
   { href: '/development', label: 'Development' },
   { href: '/marketing', label: 'Marketing' },
   { href: '/work', label: 'Work' },
-  { href: '/video-editing', label: 'Creative' },
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -72,7 +71,7 @@ export default function Navbar() {
             aria-label={`${site.shortName} — home`}
             className={`group flex items-center gap-2.5 rounded-full px-3.5 py-2.5 transition-all duration-500 ${
               scrolled || open
-                ? 'glass shadow-[0_10px_36px_-22px_rgba(20,20,50,0.55)]'
+                ? 'glass shadow-[0_10px_36px_-22px_rgba(0,0,0,0.85)]'
                 : 'border border-transparent'
             }`}
           >
@@ -93,7 +92,7 @@ export default function Navbar() {
           <div
             className={`hidden items-center gap-0.5 rounded-full px-1.5 py-1.5 transition-all duration-500 lg:flex ${
               scrolled
-                ? 'glass shadow-[0_10px_36px_-22px_rgba(20,20,50,0.55)]'
+                ? 'glass shadow-[0_10px_36px_-22px_rgba(0,0,0,0.85)]'
                 : 'border border-transparent'
             }`}
           >
@@ -126,7 +125,7 @@ export default function Navbar() {
               data-cursor="magnet"
               className={`hidden items-center gap-1.5 rounded-full px-4 py-2.5 font-mono text-[11px] tracking-[0.14em] text-fg uppercase transition-all duration-500 sm:inline-flex ${
                 scrolled || open
-                  ? 'glass shadow-[0_10px_36px_-22px_rgba(20,20,50,0.55)]'
+                  ? 'glass shadow-[0_10px_36px_-22px_rgba(0,0,0,0.85)]'
                   : 'border border-line-strong'
               } hover:border-accent/60`}
             >
@@ -144,7 +143,7 @@ export default function Navbar() {
               aria-controls="nav-panel"
               className={`flex items-center gap-2 rounded-full px-3.5 py-2.5 font-mono text-[11px] tracking-[0.14em] text-muted uppercase transition-all duration-500 hover:text-fg ${
                 scrolled || open
-                  ? 'glass shadow-[0_10px_36px_-22px_rgba(20,20,50,0.55)]'
+                  ? 'glass shadow-[0_10px_36px_-22px_rgba(0,0,0,0.85)]'
                   : 'border border-line-strong'
               }`}
             >
@@ -227,6 +226,12 @@ export default function Navbar() {
               <div className="hairline mt-10 flex flex-wrap items-center justify-between gap-4 pt-6">
                 <p className="text-[13px] text-faint">{site.longRole}</p>
                 <div className="flex flex-wrap gap-5">
+                  <a
+                    href={site.email.href}
+                    className="font-mono text-[13px] text-muted transition-colors hover:text-accent"
+                  >
+                    {site.email.display}
+                  </a>
                   <a
                     href={`tel:${site.phone.tel}`}
                     className="font-mono text-[13px] text-muted transition-colors hover:text-accent"

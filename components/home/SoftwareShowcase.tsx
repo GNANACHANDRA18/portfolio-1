@@ -84,7 +84,7 @@ export default function SoftwareShowcase() {
           </div>
 
           {/* Browser window */}
-          <div className="overflow-hidden rounded-2xl border border-line bg-elev shadow-[0_40px_110px_-52px_rgba(20,20,70,0.5)]">
+          <div className="overflow-hidden rounded-2xl border border-line bg-elev shadow-[0_40px_110px_-52px_rgba(0,0,0,0.85)]">
             <div className="flex items-center gap-3 border-b border-line bg-elev/70 px-4 py-3">
               <span aria-hidden className="flex gap-1.5">
                 {['#ff5f57', '#febc2e', '#28c840'].map((c) => (

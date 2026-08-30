@@ -21,7 +21,7 @@ type Props = {
 
 /* Token-based so the same button reads correctly on light and dark surfaces. */
 const VARIANTS: Record<Variant, string> = {
-  solid: 'bg-fg text-bg hover:shadow-[0_18px_50px_-20px_rgba(20,20,60,0.55)]',
+  solid: 'bg-fg text-bg hover:shadow-[0_18px_50px_-20px_rgba(245,245,240,0.26)]',
   outline:
     'border border-line-strong bg-surface/60 text-fg backdrop-blur-md hover:border-accent/60',
   ghost: 'text-fg hover:text-accent',

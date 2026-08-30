@@ -41,7 +41,7 @@ export default function RAGPipeline() {
                     aria-pressed={isActive}
                     className={`w-full rounded-2xl border px-4 py-5 text-left transition-all duration-400 lg:text-center ${
                       isActive
-                        ? '-translate-y-1 border-ai-blue/45 bg-elev shadow-[0_16px_44px_-24px_rgba(20,20,120,0.5)]'
+                        ? '-translate-y-1 border-ai-blue/45 bg-elev shadow-[0_16px_44px_-24px_rgba(59,107,255,0.45)]'
                         : 'border-line bg-elev/70 hover:border-line-strong'
                     }`}
                   >

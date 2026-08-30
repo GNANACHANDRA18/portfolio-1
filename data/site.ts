@@ -26,6 +26,10 @@ export const site = {
     tel: '+919110399735',
     whatsapp: 'https://wa.me/919110399735',
   },
+  email: {
+    display: 'gnanac22@gmail.com',
+    href: 'mailto:gnanac22@gmail.com',
+  },
   portrait: {
     src: '/images/gnana.webp',
     width: 576,

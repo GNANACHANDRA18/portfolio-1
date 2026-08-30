@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { projectTypes } from '@/data/services';
+import { budgetRanges, projectTypes, timelines } from '@/data/services';
 
 export const runtime = 'nodejs';
 
@@ -8,6 +8,8 @@ type Payload = {
   email?: string;
   company?: string;
   projectType?: string;
+  budget?: string;
+  timeline?: string;
   message?: string;
   website?: string; // honeypot
 };
@@ -40,6 +42,8 @@ export async function POST(request: Request) {
   const email = body.email?.trim() ?? '';
   const company = body.company?.trim() ?? '';
   const projectType = body.projectType?.trim() ?? '';
+  const budget = body.budget?.trim() ?? '';
+  const timeline = body.timeline?.trim() ?? '';
   const message = body.message?.trim() ?? '';
 
   if (name.length < 2) {
@@ -57,6 +61,20 @@ export async function POST(request: Request) {
       { status: 400 },
     );
   }
+  // Both optional — but if present they have to be one of the offered values,
+  // so the payload downstream stays predictable.
+  if (budget && !budgetRanges.includes(budget)) {
+    return NextResponse.json(
+      { error: 'Please choose a budget range from the list.' },
+      { status: 400 },
+    );
+  }
+  if (timeline && !timelines.includes(timeline)) {
+    return NextResponse.json(
+      { error: 'Please choose a timeline from the list.' },
+      { status: 400 },
+    );
+  }
   if (message.length < 10) {
     return NextResponse.json(
       { error: 'Please add a little more detail to your message.' },
@@ -69,6 +87,8 @@ export async function POST(request: Request) {
     email,
     company,
     projectType,
+    budget,
+    timeline,
     message,
     receivedAt: new Date().toISOString(),
   };
