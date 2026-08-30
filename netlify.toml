@@ -1,0 +1,32 @@
+# Netlify build configuration.
+#
+# The site is a server-rendered Next.js app — `/api/contact` is a real
+# endpoint, so this is not a static export. The Next.js runtime plugin turns
+# the build output into Netlify functions and edge handlers.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # Match the local toolchain.
+  NODE_VERSION = "22"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# The security headers also set in next.config.mjs. Next applies them to its
+# own responses; these cover everything Netlify serves directly.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+
+# Next/font and the static chunks are content-hashed, so they can be cached
+# permanently.
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

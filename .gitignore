@@ -20,3 +20,11 @@ next-env.d.ts
 # Generated at prebuild by scripts/generate-seo.mjs
 public/sitemap.xml
 public/robots.txt
+
+.vercel
+.env*
+# ...but the committed template stays tracked.
+!.env.example
+
+# Local Netlify folder
+.netlify
