@@ -44,7 +44,7 @@ export const site = {
   // Set NEXT_PUBLIC_SITE_URL in the deployment environment to the live domain.
   // The fallback is the current production host, so canonicals stay correct
   // even if the variable is missing from a build.
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://gnanachandra.netlify.app',
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://gnanachandra-portfolio.vercel.app',
   seo: {
     title:
       'Chebolu Gnanachandra (Gnana Chandra) — Software Developer, AI Practitioner & CMO',
