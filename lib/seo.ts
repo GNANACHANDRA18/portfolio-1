@@ -60,6 +60,58 @@ export function breadcrumbJsonLd(trail: { name: string; path: string }[]) {
 }
 
 /**
+ * Case-study page schema.
+ *
+ * Deliberately splits authorship: the page is written by Gnana, while the
+ * project it describes was created by Qyverix. Claiming the project itself as
+ * his work would be inaccurate.
+ */
+export function caseStudyJsonLd(project: {
+  name: string;
+  slug: string;
+  summary: string;
+  image: string;
+  year: string;
+  industry: string;
+  location: string;
+  builtBy: string;
+  website: string;
+}) {
+  const url = `${site.url}/work/${project.slug}`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': url,
+    url,
+    name: `${project.name} — case study`,
+    description: project.summary,
+    primaryImageOfPage: project.image,
+    inLanguage: 'en',
+    isPartOf: { '@id': `${site.url}/#website` },
+    author: { '@id': `${site.url}/#person` },
+    about: {
+      '@type': 'CreativeWork',
+      name: project.name,
+      description: project.summary,
+      url: project.website,
+      image: project.image,
+      dateCreated: project.year,
+      genre: project.industry,
+      locationCreated: {
+        '@type': 'Place',
+        name: project.location,
+      },
+      creator: {
+        '@type': 'Organization',
+        name: project.builtBy,
+        url: site.company.url,
+      },
+      contributor: { '@id': `${site.url}/#person` },
+    },
+  };
+}
+
+/**
  * Structured data injected once in the root layout.
  *
  * Three linked nodes: the Person (the entity a name search is looking for),

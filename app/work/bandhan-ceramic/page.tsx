@@ -3,7 +3,7 @@ import CaseStudy from '@/components/CaseStudy';
 import SectionHead from '@/components/ai/SectionHead';
 import MagneticButton from '@/components/MagneticButton';
 import { getProject } from '@/data/projects';
-import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
+import { breadcrumbJsonLd, caseStudyJsonLd, pageMetadata } from '@/lib/seo';
 
 const project = getProject('bandhan-ceramic');
 
@@ -24,13 +24,14 @@ export default function BandhanCeramicPage() {
         type="application/ld+json"
         // Static, author-controlled structured data.
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
+          __html: JSON.stringify([
+            caseStudyJsonLd(project),
             breadcrumbJsonLd([
               { name: 'Home', path: '/' },
               { name: 'Work', path: '/work' },
               { name: 'Bandhan Ceramic', path: '/work/bandhan-ceramic' },
             ]),
-          ),
+          ]),
         }}
       />
 
