@@ -15,7 +15,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://gnanachandra.com'
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://gnanachandra.netlify.app'
 ).replace(/\/$/, '');
 
 const ROUTES = [

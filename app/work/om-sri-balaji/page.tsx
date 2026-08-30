@@ -3,14 +3,14 @@ import CaseStudy from '@/components/CaseStudy';
 import SectionHead from '@/components/ai/SectionHead';
 import MagneticButton from '@/components/MagneticButton';
 import { getProject } from '@/data/projects';
-import { pageMetadata } from '@/lib/seo';
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 
 const project = getProject('om-sri-balaji');
 
 export const metadata = pageMetadata({
   title: 'Om Sri Balaji Electricals — Retail Digital Experience',
   description:
-    'Case study: Om Sri Balaji Electricals, trading in electricals and sanitaryware in Ongole since 1962 — authorised brand catalogue, trade pricing and WhatsApp enquiry flows, built by Qyverix.',
+    'Case study: Om Sri Balaji Electricals, trading in Ongole since 1962 — authorised brand catalogue, trade pricing and WhatsApp enquiry flows.',
   path: '/work/om-sri-balaji',
   image: project?.image,
 });
@@ -20,6 +20,20 @@ export default function OmSriBalajiPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        // Static, author-controlled structured data.
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: 'Home', path: '/' },
+              { name: 'Work', path: '/work' },
+              { name: 'Om Sri Balaji Electricals', path: '/work/om-sri-balaji' },
+            ]),
+          ),
+        }}
+      />
+
       <CaseStudy
         project={project}
         labels={{

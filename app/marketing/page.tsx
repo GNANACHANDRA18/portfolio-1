@@ -31,7 +31,7 @@ import { pageMetadata } from '@/lib/seo';
 export const metadata = pageMetadata({
   title: 'Marketing, Brand & Business',
   description:
-    'Gnana Chandra is CMO at Qyverix, working across marketing, brand, client success, business development and digital products — thinking about how businesses grow, not only how they are marketed.',
+    'Gnana Chandra is CMO at Qyverix, across marketing, brand, client success and business development — how businesses grow, not just how they are marketed.',
   path: '/marketing',
 });
 

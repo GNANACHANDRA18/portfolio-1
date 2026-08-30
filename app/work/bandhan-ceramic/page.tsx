@@ -3,14 +3,14 @@ import CaseStudy from '@/components/CaseStudy';
 import SectionHead from '@/components/ai/SectionHead';
 import MagneticButton from '@/components/MagneticButton';
 import { getProject } from '@/data/projects';
-import { pageMetadata } from '@/lib/seo';
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 
 const project = getProject('bandhan-ceramic');
 
 export const metadata = pageMetadata({
   title: 'Bandhan Ceramic — Commerce Digital Product Experience',
   description:
-    'Case study: Bandhan Ceramic, a 5,000+ product catalogue across 13 stores in Hyderabad — tile calculator, AR visualiser and architect trade pricing, built by Qyverix.',
+    'Case study: Bandhan Ceramic, 5,000+ products across 13 Hyderabad stores — tile calculator, AR visualiser and architect trade pricing.',
   path: '/work/bandhan-ceramic',
   image: project?.image,
 });
@@ -20,6 +20,20 @@ export default function BandhanCeramicPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        // Static, author-controlled structured data.
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: 'Home', path: '/' },
+              { name: 'Work', path: '/work' },
+              { name: 'Bandhan Ceramic', path: '/work/bandhan-ceramic' },
+            ]),
+          ),
+        }}
+      />
+
       <CaseStudy
         project={project}
         labels={{

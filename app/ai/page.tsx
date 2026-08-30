@@ -21,7 +21,7 @@ import { pageMetadata } from '@/lib/seo';
 export const metadata = pageMetadata({
   title: 'AI — Think With AI, Build With AI',
   description:
-    'How Gnana Chandra works with artificial intelligence in practice: AI-assisted development, research, content, automation, agents, RAG and AI-powered applications — with human judgment in control.',
+    'How Gnana Chandra uses AI in practice: AI-assisted development, research, content, automation, agents, RAG and AI-powered applications.',
   path: '/ai',
 });
 

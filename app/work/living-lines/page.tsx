@@ -3,14 +3,14 @@ import CaseStudy from '@/components/CaseStudy';
 import SectionHead from '@/components/ai/SectionHead';
 import MagneticButton from '@/components/MagneticButton';
 import { getProject } from '@/data/projects';
-import { pageMetadata } from '@/lib/seo';
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 
 const project = getProject('living-lines');
 
 export const metadata = pageMetadata({
   title: 'Living Lines — Premium Retail Digital Experience',
   description:
-    'Case study: Living Lines, a premium tiles, bathware and architectural surfaces retailer in Visakhapatnam — three showrooms, brand catalogue and design-consultation flows, built by Qyverix.',
+    'Case study: Living Lines, a premium tiles and bathware retailer in Visakhapatnam — three showrooms, brand catalogue and design-consultation flows.',
   path: '/work/living-lines',
   image: project?.image,
 });
@@ -20,6 +20,20 @@ export default function LivingLinesPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        // Static, author-controlled structured data.
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: 'Home', path: '/' },
+              { name: 'Work', path: '/work' },
+              { name: 'Living Lines', path: '/work/living-lines' },
+            ]),
+          ),
+        }}
+      />
+
       <CaseStudy
         project={project}
         labels={{

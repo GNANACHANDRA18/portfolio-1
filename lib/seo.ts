@@ -41,6 +41,25 @@ export function pageMetadata({
 }
 
 /**
+ * Breadcrumb trail for a nested page.
+ *
+ * Gives search engines the hierarchy explicitly, so a case study can show
+ * "Work › Living Lines" in results rather than a bare URL.
+ */
+export function breadcrumbJsonLd(trail: { name: string; path: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: trail.map((crumb, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: crumb.name,
+      item: `${site.url}${crumb.path === '/' ? '' : crumb.path}`,
+    })),
+  };
+}
+
+/**
  * Structured data injected once in the root layout.
  *
  * Three linked nodes: the Person (the entity a name search is looking for),

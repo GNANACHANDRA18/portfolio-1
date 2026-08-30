@@ -42,7 +42,9 @@ export const site = {
     alt: 'Portrait of Chebolu Gnanachandra',
   },
   // Set NEXT_PUBLIC_SITE_URL in the deployment environment to the live domain.
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://gnanachandra.com',
+  // The fallback is the current production host, so canonicals stay correct
+  // even if the variable is missing from a build.
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://gnanachandra.netlify.app',
   seo: {
     title:
       'Chebolu Gnanachandra (Gnana Chandra) — Software Developer, AI Practitioner & CMO',

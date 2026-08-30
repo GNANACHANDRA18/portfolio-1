@@ -30,7 +30,7 @@ import { pageMetadata } from '@/lib/seo';
 export const metadata = pageMetadata({
   title: 'About',
   description:
-    'Gnana Chandra is a software developer, CMO and AI practitioner working where technology, business, marketing and creativity meet — and this is how he works across all of them.',
+    'Gnana Chandra is a software developer, CMO and AI practitioner working where technology, business, marketing and creativity meet — and how he works.',
   path: '/about',
 });
 
