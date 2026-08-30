@@ -294,3 +294,5 @@ Positioning is deliberately limited to AI practitioner / AI-powered developer.
 No certifications, partnerships, academic qualifications, business metrics,
 employment dates or social accounts beyond those supplied are stated anywhere.
 Case studies separate the Qyverix team's project from Gnana's own contribution.
+
+<!-- auto-deploy wired: 2026-08-30T22:16:18Z -->
