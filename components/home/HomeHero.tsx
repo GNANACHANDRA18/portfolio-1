@@ -70,7 +70,10 @@ export default function HomeHero() {
         </motion.p>
 
         <h1 className="max-w-[14ch] text-[clamp(2.9rem,10.5vw,9.5rem)] leading-[0.86] font-medium tracking-[-0.055em]">
-          <span className="sr-only">I build what&rsquo;s next.</span>
+          <span className="sr-only">
+            Chebolu Gnanachandra (Gnana Chandra) — software developer, AI
+            practitioner and CMO. I build what&rsquo;s next.
+          </span>
           {LINES.map((line, i) => (
             <span
               key={line.text}

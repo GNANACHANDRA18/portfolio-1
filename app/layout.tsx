@@ -37,7 +37,11 @@ export const metadata: Metadata = {
   creator: site.name,
   keywords: [
     'Gnana Chandra',
+    'Gnanachandra',
     'Chebolu Gnanachandra',
+    'Chebolu Gnana Chandra',
+    'Gnana Chandra portfolio',
+    'Gnana Chandra developer',
     'software developer',
     'CMO',
     'AI practitioner',
@@ -49,6 +53,17 @@ export const metadata: Metadata = {
     'Qyverix',
   ],
   alternates: { canonical: '/' },
+  // Served from /public rather than the app/ file convention: Next's metadata
+  // route loader cannot handle the apostrophe in this project's folder name.
+  icons: {
+    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
+    shortcut: ['/icon.svg'],
+    apple: [{ url: '/icon.svg' }],
+  },
+  // Set GOOGLE_SITE_VERIFICATION to the token Search Console gives you.
+  ...(process.env.GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
+    : {}),
   openGraph: {
     title: site.seo.title,
     description: site.seo.description,

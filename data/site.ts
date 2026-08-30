@@ -30,6 +30,11 @@ export const site = {
     display: 'gnanac22@gmail.com',
     href: 'mailto:gnanac22@gmail.com',
   },
+  /**
+   * Verified profiles only. Each one is a `sameAs` signal tying this site to
+   * the same person — add LinkedIn, X or others here once they exist.
+   */
+  profiles: ['https://github.com/GNANACHANDRA18'],
   portrait: {
     src: '/images/gnana.webp',
     width: 576,
@@ -39,7 +44,8 @@ export const site = {
   // Set NEXT_PUBLIC_SITE_URL in the deployment environment to the live domain.
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://gnanachandra.com',
   seo: {
-    title: 'Gnana Chandra — Software Developer, AI Practitioner & CMO',
+    title:
+      'Chebolu Gnanachandra (Gnana Chandra) — Software Developer, AI Practitioner & CMO',
     description:
       'Chebolu Gnana Chandra is a software developer, AI practitioner and CMO working across artificial intelligence, software, business, marketing, branding and creative technology.',
   },
