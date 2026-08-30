@@ -19,10 +19,10 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 /**
  * Contact endpoint.
  *
- * Validates the submission, then forwards it to CONTACT_WEBHOOK_URL if that
- * environment variable is set (any webhook that accepts JSON — email service,
- * automation platform, CRM). With no webhook configured the submission is
- * accepted and logged server-side so the form works out of the box.
+ * Validates the submission, then hands it to `deliver` below, which sends it
+ * by email through Resend, falls back to a generic JSON webhook, and finally
+ * to a server-side log — so the form works on a fresh deployment with nothing
+ * configured yet.
  */
 export async function POST(request: Request) {
   let body: Payload;
@@ -93,6 +93,84 @@ export async function POST(request: Request) {
     receivedAt: new Date().toISOString(),
   };
 
+  const delivered = await deliver(submission);
+
+  if (!delivered) {
+    return NextResponse.json(
+      { error: 'Could not send your message right now. Please try again.' },
+      { status: 502 },
+    );
+  }
+
+  return NextResponse.json({ ok: true });
+}
+
+type Submission = {
+  name: string;
+  email: string;
+  company: string;
+  projectType: string;
+  budget: string;
+  timeline: string;
+  message: string;
+  receivedAt: string;
+};
+
+/** Plain-text body — readable in any client, no template to maintain. */
+function format(s: Submission): string {
+  return [
+    `From:     ${s.name} <${s.email}>`,
+    s.company ? `Company:  ${s.company}` : null,
+    `Type:     ${s.projectType}`,
+    s.budget ? `Budget:   ${s.budget}` : null,
+    s.timeline ? `Timeline: ${s.timeline}` : null,
+    `Received: ${s.receivedAt}`,
+    '',
+    s.message,
+  ]
+    .filter(Boolean)
+    .join('\n');
+}
+
+/**
+ * Sends the submission on. Tries Resend first, then a generic webhook, and
+ * finally falls back to a server-side log so the form still works on a fresh
+ * deployment with nothing configured.
+ *
+ * Returns false only when a configured transport was actually attempted and
+ * failed — an unconfigured environment is not an error for the visitor.
+ */
+async function deliver(submission: Submission): Promise<boolean> {
+  const resendKey = process.env.RESEND_API_KEY;
+  const to = process.env.CONTACT_TO_EMAIL;
+  // Resend accepts its shared onboarding sender until a domain is verified.
+  const from = process.env.CONTACT_FROM_EMAIL ?? 'onboarding@resend.dev';
+
+  if (resendKey && to) {
+    try {
+      const res = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${resendKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: `Portfolio <${from}>`,
+          to: [to],
+          // Replying in the mail client goes straight back to the sender.
+          reply_to: submission.email,
+          subject: `${submission.projectType} — ${submission.name}`,
+          text: format(submission),
+        }),
+      });
+      if (!res.ok) throw new Error(`Resend responded ${res.status}`);
+      return true;
+    } catch (error) {
+      console.error('[contact] resend delivery failed', error);
+      return false;
+    }
+  }
+
   const webhook = process.env.CONTACT_WEBHOOK_URL;
 
   if (webhook) {
@@ -103,15 +181,13 @@ export async function POST(request: Request) {
         body: JSON.stringify(submission),
       });
       if (!res.ok) throw new Error(`Webhook responded ${res.status}`);
-    } catch {
-      return NextResponse.json(
-        { error: 'Could not send your message right now. Please try again.' },
-        { status: 502 },
-      );
+      return true;
+    } catch (error) {
+      console.error('[contact] webhook delivery failed', error);
+      return false;
     }
-  } else {
-    console.info('[contact] submission received', submission);
   }
 
-  return NextResponse.json({ ok: true });
+  console.info('[contact] submission received (no transport configured)', submission);
+  return true;
 }

@@ -112,23 +112,31 @@ deleted, the `prebuild` script removed, and standard `app/sitemap.ts` /
 
 ## Surfaces
 
-The site runs bright end to end. `lib/theme.ts` maps a route to its palette and
-`components/SurfaceShell.tsx` applies it to the whole page, so no page declares
-a theme of its own:
+The site runs dark end to end — `#050505` ground, `#f5f5f0` type. `lib/theme.ts`
+maps a route to its palette and `components/SurfaceShell.tsx` applies it to the
+whole page, so no page declares a theme of its own. Routes differ only in accent
+temperature, never in brightness:
 
 | Route | Class | Feel |
 | --- | --- | --- |
-| `/ai` | `ai-light` | Cool near-white — bright AI lab |
-| `/marketing` | `noir` | #050505 — dark, bold, expensive |
-| everything else | `lux-light` | Warm ivory — luxury tech |
+| `/ai` | `ai` | Cooler, deeper room — blue-violet leads |
+| `/marketing` | `noir` | Flat editorial black — business-first |
+| everything else | `lux` | Near-black with warm gold — luxury tech |
 
-`noir` also re-declares the accent spectrum (cooler blue/violet/cyan plus warm
-gold), so the shared `ai-spectrum` fill and every accent utility retune to the
-dark surface without a second set of classes.
+Each surface re-declares the colour tokens (`--color-bg`, `--color-fg`,
+`--color-line`, `--color-accent`, …) inside its own scope, so every shared
+utility — `bg-bg`, `text-fg`, `border-line`, the `ai-spectrum` fill — retunes
+without a second set of classes.
 
 `.ai-surface` paints the background from inside `@layer base`, so utilities can
-still override it. `.ai-dark` flips a band back to dark inside a bright page
-(used once, for Human + AI on `/ai`).
+still override it — that is how the fixed header borrows the tokens without
+gaining a background of its own. `.ai-dark` lifts a band one step lighter for a
+contrast break inside a page (used for Human + AI on `/ai`).
+
+**Tokens.** Colour, type scale, radius, easing, duration and elevation all live
+in the `@theme` block at the top of `app/globals.css`. Nothing hard-codes a
+design value; a component reaches for `rounded-lg`, `ease-out-expo`,
+`duration-slow` or `shadow-md` and inherits the system.
 
 ## The global system
 
@@ -137,8 +145,9 @@ Shared machinery mounted once in the root layout:
 | Component | What it does |
 | --- | --- |
 | `Loader` | Opening sequence — GNANA → full name → positioning, with a 000–100 counter. Runs once per browser session |
-| `RouteIntro` | Plays a word (**AI**, **WORK**, **GNANA**) when those routes open, once per route per session |
-| `AICursor` | The single custom pointer. Modes via `data-cursor="orb \| magnet \| text \| label"`, plus `data-cursor-label` to put a word in the ring |
+| `RouteIntro` | Plays a word (**AI**, **WORK**, **GNANA**, **BUILD**, **GROW**, **TALK**) when those routes open, once per route per session |
+| `AnimatedCursor` | The single custom pointer. Named states via `data-cursor="view \| open \| explore \| ai \| code \| follow \| drag \| send \| magnet \| orb \| text"`, each carrying its own label and tint, plus `data-cursor-label` for free text. Click ripples on pointerdown |
+| `Signal` | **THE SIGNAL** — a pulse of light running along a hairline. Marks the header edge, section boundaries and the footer, so unrelated pages read as one system. `Signal.Dot` is the same idea at a point |
 | `AmbientBackground` | Two light fields and a fine grid that lag behind the pointer, driven by CSS variables rather than re-renders |
 | `SurfaceShell` | Applies the route palette and hands the surface to the cursor |
 | `MagneticButton` | The one button system — leans toward the pointer, label trails it, arrow slides, click ripples |
@@ -156,7 +165,7 @@ Each page keeps its own personality on the shared system:
 
 | Page | Character | Signature moments |
 | --- | --- | --- |
-| `/` | Bright luxury-tech | Intelligence field, identity switcher, work panels with fluid image morph |
+| `/` | Dark luxury-tech | Intelligence field, identity switcher, the Gnana System, work panels with fluid image morph |
 | `/ai` | Futuristic AI lab | Canvas orb, constellation, 560vh scroll transformation, agent loop |
 | `/development` | Engineering studio | System stack, code→interface split, API pipeline, debug playground, device showcase |
 | `/marketing` | Dark business brain | Canvas business ecosystem, 16 interactive subjects, flywheel, AI × Software × Business triangle, marquee |
@@ -166,7 +175,7 @@ Each page keeps its own personality on the shared system:
 
 ## The home experience
 
-`app/page.tsx` composes twelve sections from `components/home/`, with copy in
+`app/page.tsx` composes thirteen sections from `components/home/`, with copy in
 `data/home.ts`.
 
 | Component | What it does |
@@ -174,6 +183,7 @@ Each page keeps its own personality on the shared system:
 | `HomeHero` + `IntelligenceField` | 104svh hero over a canvas particle field that repels and bends around the pointer |
 | `EditorialStatement` | Technology / meets / creativity, with disciplines arriving from different directions |
 | `IdentitySwitcher` | BUILD · THINK · CREATE · GROW · AUTOMATE — one active at a time |
+| `GnanaSystem` | THE GNANA SYSTEM — six domains (AI, CODE, BUSINESS, BRAND, CONTENT, CLIENT) webbed to a GNANA core, on the shared `Constellation` |
 | `AIFeature` | Teases `/ai`; the orb itself is the link |
 | `SoftwareShowcase` | 340vh sticky browser window, stages activate on scroll |
 | `QyverixSection` | CMO role and the pitch-to-handoff journey |
@@ -184,12 +194,15 @@ Each page keeps its own personality on the shared system:
 | `PhilosophySequence` | Four lines handing over one at a time across 420vh |
 | `HomeFinalCTA` | Gradient field with particles behind the closing type |
 
-The **custom cursor** is mounted once in the root layout and activates only on
-the bright surfaces. Project links use `data-cursor-label="View project"` to
-put a word inside the ring.
+The **custom cursor** is mounted once in the root layout and runs on every
+surface, on fine-pointer devices only. Most links declare a named state —
+`data-cursor="view"` on project links, `"explore"` on topic panels, `"follow"`
+on Instagram, `"ai"` on the AI lab CTA, `"send"` on the contact submit — and the
+pointer supplies the label and tint.
 
-`RouteIntro` plays a word — **AI**, **WORK**, **GNANA** — when those routes are
-opened, once per route per session so back-navigation stays instant.
+`RouteIntro` plays a word — **AI**, **WORK**, **GNANA**, **BUILD**, **GROW**,
+**TALK** — when those routes are opened, once per route per session so
+back-navigation stays instant.
 
 > **Note:** don't run `npm run build` while `npm run dev` is running. Both write
 > to `.next`, and the build will clobber the dev server's chunks (`Cannot find
@@ -197,17 +210,16 @@ opened, once per route per session so back-navigation stays instant.
 
 ## The `/ai` experience
 
-`/ai` is a bright island inside an otherwise dark site — its own palette,
-custom pointer, entry transition and eighteen scroll-driven sections.
+`/ai` is a cooler, deeper room inside the dark site — its own accent set, entry
+transition and eighteen scroll-driven sections.
 
-**Theming.** `.ai-light` in `app/globals.css` re-declares the colour tokens
-(`--color-bg`, `--color-fg`, `--color-line`, …) inside a scope, so every shared
-utility keeps working while the surface flips to near-white. `.ai-surface`
-paints the background and lives in `@layer base` so utilities can override it —
-that is how the fixed header borrows the light tokens without gaining a
-background. `.ai-dark` does the reverse for the "Human + AI" band nested inside
-the page. `Navbar` and `Footer` check the pathname and add `ai-light`
-themselves.
+**Theming.** `.ai` in `app/globals.css` re-declares the colour tokens
+(`--color-bg`, `--color-fg`, `--color-line`, `--color-accent`, …) inside a
+scope, so every shared utility keeps working while the accent shifts from warm
+gold to blue-violet. `.ai-surface` paints the background and lives in
+`@layer base` so utilities can override it — that is how the fixed header
+borrows the tokens without gaining a background. `.ai-dark` lifts the
+"Human + AI" band one step for contrast.
 
 **Layout.** `app/ai/layout.tsx` mounts the intro transition, the scroll
 progress bar and the custom cursor around the page.
@@ -228,7 +240,7 @@ progress bar and the custom cursor around the page.
 | `RAGPipeline` | Retrieval pipeline with per-step explanations |
 | `AIAgents` | Continuously cycling agent loop |
 | `AIToolOrbit` | Rotating toolkit orbit (CSS animation, pauses on hover) |
-| `HumanPlusAI` | Dark band; the equation assembles on scroll |
+| `HumanPlusAI` | Lifted contrast band; the equation assembles on scroll |
 | `AIQuality` | Failure modes with hover explanations |
 | `AIProjectLab` | Empty slots — reads `data/ai-projects.ts` |
 | `AIPhilosophy` | Two statements trading places on scroll |
@@ -239,7 +251,7 @@ points (58 on mobile) with proximity links, rotated in software. It pauses via
 `IntersectionObserver` when off-screen, squeezes and fades as the hero scrolls
 away, and draws a single static frame under reduced motion.
 
-**The cursor** (`AICursor.tsx`) mounts only on `(hover: hover) and (pointer:
+**The cursor** (`AnimatedCursor.tsx`) mounts only on `(hover: hover) and (pointer:
 fine)` devices. Elements opt into a shape with `data-cursor="orb | magnet |
 text"`; links and buttons get the magnet shape automatically.
 
@@ -257,7 +269,7 @@ image/demo/GitHub/case-study links) and it renders in place of an empty slot.
 A few rules the codebase relies on — worth knowing before editing:
 
 - **Never hardcode `text-white` / `text-black` on a `bg-fg` surface.** Use
-  `bg-fg text-bg` so the control inverts correctly on both the bright pages and
+  `bg-fg text-bg` so the control inverts correctly on both the accented pages and
   the dark `/marketing` one.
 - **Every page needs exactly one `<h1>`.** Page mastheads pass `as="h1"` to
   `SectionHead`; every other use stays an `<h2>`.
