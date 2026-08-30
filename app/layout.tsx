@@ -60,10 +60,15 @@ export const metadata: Metadata = {
     shortcut: ['/icon.svg'],
     apple: [{ url: '/icon.svg' }],
   },
-  // Set GOOGLE_SITE_VERIFICATION to the token Search Console gives you.
-  ...(process.env.GOOGLE_SITE_VERIFICATION
-    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
-    : {}),
+  // Search Console verification. The token is public — it ships in the page
+  // source either way — so it is committed as a fallback: losing the env var
+  // would otherwise silently un-verify the property. The env var still wins,
+  // so a re-verification can be rolled out without a code change.
+  verification: {
+    google:
+      process.env.GOOGLE_SITE_VERIFICATION ??
+      '0ylq9qm7O6tlDGPOu98k_SDP_-1tKtp0qOfdukme1z4',
+  },
   openGraph: {
     title: site.seo.title,
     description: site.seo.description,
