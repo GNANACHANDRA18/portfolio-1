@@ -60,14 +60,19 @@ export const metadata: Metadata = {
     shortcut: ['/icon.svg'],
     apple: [{ url: '/icon.svg' }],
   },
-  // Search Console verification. The token is public — it ships in the page
-  // source either way — so it is committed as a fallback: losing the env var
-  // would otherwise silently un-verify the property. The env var still wins,
-  // so a re-verification can be rolled out without a code change.
+  // Search Console verification. The tokens are public — they ship in the page
+  // source either way — so they are committed as a fallback: losing the env var
+  // would otherwise silently un-verify a property. Google accepts several
+  // verification tags at once, so an extra token from the env var is added to
+  // the committed ones rather than replacing them.
   verification: {
-    google:
-      process.env.GOOGLE_SITE_VERIFICATION ??
+    google: [
+      ...(process.env.GOOGLE_SITE_VERIFICATION
+        ? [process.env.GOOGLE_SITE_VERIFICATION]
+        : []),
       '0ylq9qm7O6tlDGPOu98k_SDP_-1tKtp0qOfdukme1z4',
+      '_crzgnxo8IE8BtmIf43vH1rp2988iFs6XBRlgD_PaBU',
+    ],
   },
   openGraph: {
     title: site.seo.title,
