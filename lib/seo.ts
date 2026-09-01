@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { site } from '@/data/site';
+import { ogKey } from '@/lib/og';
 
 type PageMetaInput = {
   title: string;
@@ -16,7 +17,11 @@ export function pageMetadata({
   image,
 }: PageMetaInput): Metadata {
   const url = `${site.url}${path === '/' ? '' : path}`;
-  const shareImage = image ?? `${site.url}${site.portrait.src}`;
+
+  // Each route has a generated 1200×630 card at /og/<key>; an explicit image
+  // overrides it. Absolute, because a crawler has no page to resolve a
+  // root-relative path against.
+  const shareImage = image ?? `${site.url}/og/${ogKey(path)}`;
 
   return {
     title,
@@ -29,7 +34,7 @@ export function pageMetadata({
       siteName: site.seo.title,
       type: 'website',
       locale: 'en_IN',
-      images: [{ url: shareImage, alt: title }],
+      images: [{ url: shareImage, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: 'summary_large_image',

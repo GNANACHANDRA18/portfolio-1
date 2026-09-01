@@ -79,14 +79,6 @@ export const marketingFlow = [
   'Client Success',
 ];
 
-export const devFlow = [
-  'Idea',
-  'Architecture',
-  'UI',
-  'Development',
-  'Testing',
-  'Deployment',
-];
 
 export const socialFlow = [
   'Research',
@@ -98,12 +90,3 @@ export const socialFlow = [
   'Improve',
 ];
 
-export const videoFlow = [
-  'Concept',
-  'Script',
-  'Assets',
-  'Edit',
-  'Motion',
-  'Sound',
-  'Export',
-];

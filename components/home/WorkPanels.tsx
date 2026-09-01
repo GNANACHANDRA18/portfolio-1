@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { img } from '@/lib/media';
 import Link from 'next/link';
 import { useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
@@ -119,7 +120,7 @@ export default function WorkPanels() {
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               >
                 <Image
-                  src={current.image}
+                  {...img(current.media.card)}
                   alt={`${current.name} — ${current.tagline}`}
                   fill
                   sizes="(max-width: 1024px) 100vw, 620px"
@@ -160,7 +161,7 @@ export default function WorkPanels() {
               >
                 <div className="relative aspect-[16/10] overflow-hidden bg-elev">
                   <Image
-                    src={project.image}
+                    {...img(project.media.square)}
                     alt={`${project.name} — ${project.tagline}`}
                     fill
                     sizes="100vw"

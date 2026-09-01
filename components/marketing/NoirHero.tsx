@@ -5,6 +5,8 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import BusinessEcosystem from './BusinessEcosystem';
 import { heroMorph } from '@/data/business';
 import { site } from '@/data/site';
+import PlateBackdrop from '@/components/media/PlateBackdrop';
+import { routePlate } from '@/data/visuals';
 
 const LINES = [
   { text: 'I THINK', accent: false },
@@ -27,6 +29,7 @@ export default function NoirHero() {
 
   return (
     <section className="noir-grain relative flex min-h-[104svh] items-center overflow-hidden pt-32 pb-20 md:pt-36">
+      <PlateBackdrop src={routePlate.marketing} treatment="backdrop" priority />
       <div aria-hidden className="noir-grid pointer-events-none absolute inset-0" />
 
       {/* Ecosystem sits behind the type on small screens, beside it on large. */}

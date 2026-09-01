@@ -91,41 +91,9 @@ export const contentFormats = [
   'SALES MATERIAL',
 ];
 
-export const socialLoop = [
-  'IDEA',
-  'CONTENT',
-  'DESIGN',
-  'PUBLISH',
-  'ENGAGE',
-  'LEARN',
-  'IMPROVE',
-];
 
-export const aiMarketingAreas = [
-  { label: 'RESEARCH', note: 'Market and competitor breadth, fast.' },
-  { label: 'CONTENT', note: 'Drafts at volume, cut down by judgement.' },
-  { label: 'PROPOSAL', note: 'Structure and first pass, then rewritten.' },
-  { label: 'ANALYSIS', note: 'Patterns across what actually happened.' },
-  { label: 'IDEATION', note: 'More angles than one person generates alone.' },
-];
 
-export const clientSuccessFlow = [
-  'EXPECTATIONS',
-  'COMMUNICATION',
-  'BUILD',
-  'FEEDBACK',
-  'HANDOFF',
-  'SUPPORT',
-];
 
-export const marketingSystem = [
-  'RESEARCH',
-  'POSITION',
-  'CREATE',
-  'DISTRIBUTE',
-  'MEASURE',
-  'LEARN',
-];
 
 export const createdArtefacts = [
   {

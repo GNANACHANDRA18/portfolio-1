@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { intersectionCircles, intersectionOutputs } from '@/data/about';
+import ChipCloud from '@/components/ChipCloud';
 
 /** Four fields drifting together as the section is scrolled. */
 export default function Intersection() {
@@ -106,20 +107,7 @@ export default function Intersection() {
               alone.
             </p>
 
-            <ul className="mt-10 flex flex-wrap gap-2">
-              {intersectionOutputs.map((item, i) => (
-                <motion.li
-                  key={item}
-                  initial={reduce ? false : { opacity: 0, y: 12 }}
-                  whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-50px' }}
-                  transition={{ duration: 0.45, delay: i * 0.05 }}
-                  className="rounded-full border border-line bg-surface/70 px-4 py-2 text-[13.5px] text-muted"
-                >
-                  {item}
-                </motion.li>
-              ))}
-            </ul>
+            <ChipCloud items={intersectionOutputs} className="mt-10" />
           </div>
         </div>
       </div>

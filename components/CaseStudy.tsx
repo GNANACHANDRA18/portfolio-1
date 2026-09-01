@@ -5,17 +5,21 @@ import Link from 'next/link';
 import { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import SectionHead from './ai/SectionHead';
+import GlassPanel from './media/GlassPanel';
+import { img } from '@/lib/media';
 import Aurora from './ai/Aurora';
 import MagneticButton from './MagneticButton';
 import Reveal from './Reveal';
 import { projects, type Project } from '@/data/projects';
+import FactStrip from '@/components/FactStrip';
 
 type Labels = {
   strategy: string;
   experience: string;
 };
 
-/** A full-bleed plate that drifts as it passes through the viewport. */
+/** A full-bleed plate that drifts as it passes through the viewport.
+ *  `src` is a key into the media manifest, not a URL. */
 function Plate({
   src,
   alt,
@@ -46,7 +50,7 @@ function Plate({
         style={reduce ? undefined : { y, scale }}
       >
         <Image
-          src={src}
+          {...img(src)}
           alt={alt}
           fill
           priority={priority}
@@ -153,16 +157,7 @@ export default function CaseStudy({
           </Reveal>
 
           <Reveal delay={0.16}>
-            <dl className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-4">
-              {project.facts.map((fact) => (
-                <div key={fact.label} className="bg-surface/70 px-5 py-6">
-                  <dt className="font-mono text-[10px] tracking-[0.18em] text-faint uppercase">
-                    {fact.label}
-                  </dt>
-                  <dd className="mt-2.5 text-[15px] text-fg">{fact.value}</dd>
-                </div>
-              ))}
-            </dl>
+            <FactStrip facts={project.facts} className="mt-14" />
           </Reveal>
         </div>
       </section>
@@ -172,7 +167,7 @@ export default function CaseStudy({
         <div className="container-x">
           <Reveal>
             <Plate
-              src={project.image}
+              src={project.media.card}
               alt={`${project.name} — ${project.tagline}`}
               priority
             />
@@ -227,8 +222,8 @@ export default function CaseStudy({
         <div className="container-x">
           <Reveal>
             <Plate
-              src={project.image}
-              alt={`${project.name} interface detail`}
+              src={project.media.plate}
+              alt={`${project.name} — showroom detail`}
               ratio="aspect-[21/9]"
             />
           </Reveal>
@@ -252,23 +247,53 @@ export default function CaseStudy({
             className="mb-12"
           />
 
-          <ul className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
-            {project.features.map((feature, i) => (
-              <Reveal
-                as="li"
-                key={feature}
-                delay={Math.min(i * 0.05, 0.3)}
-                className="group flex items-baseline gap-4 bg-surface/70 px-6 py-7 transition-colors duration-400 hover:bg-elev"
-              >
-                <span className="font-mono text-[10px] tracking-[0.16em] text-faint">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span className="text-[15.5px] text-muted transition-colors duration-400 group-hover:text-fg">
-                  {feature}
-                </span>
-              </Reveal>
-            ))}
-          </ul>
+          <div className="grid gap-5 lg:grid-cols-[1.35fr_1fr]">
+            <ul className="grid gap-px self-start overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2">
+              {project.features.map((feature, i) => (
+                <Reveal
+                  as="li"
+                  key={feature}
+                  delay={Math.min(i * 0.05, 0.3)}
+                  className="group flex items-baseline gap-4 bg-surface/70 px-6 py-7 transition-colors duration-400 hover:bg-elev"
+                >
+                  <span className="font-mono text-[10px] tracking-[0.16em] text-faint">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span className="text-[15.5px] text-muted transition-colors duration-400 group-hover:text-fg">
+                    {feature}
+                  </span>
+                </Reveal>
+              ))}
+            </ul>
+
+            {/* The square crop, under glass — the third and last framing of
+                this project's photography on the page. */}
+            <Reveal delay={0.12}>
+              <GlassPanel density="thin" className="relative h-full min-h-[280px]">
+                <Image
+                  {...img(project.media.square)}
+                  alt={`${project.name} — detail`}
+                  data-glass-bg
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 420px"
+                  className="object-cover opacity-[0.82]"
+                />
+                <div
+                  aria-hidden
+                  data-glass-bg
+                  className="absolute inset-0 bg-linear-to-t from-bg/85 via-bg/10 to-transparent"
+                />
+                <div className="relative flex h-full flex-col justify-end p-7">
+                  <p className="font-mono text-[10px] tracking-[0.18em] text-white/60 uppercase">
+                    {project.builtBy} · {project.year}
+                  </p>
+                  <p className="mt-2 text-[17px] leading-snug font-medium tracking-[-0.03em] text-white">
+                    {project.tagline}
+                  </p>
+                </div>
+              </GlassPanel>
+            </Reveal>
+          </div>
         </div>
       </section>
 

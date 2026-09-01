@@ -4,10 +4,13 @@ const nextConfig = {
   poweredByHeader: false,
   images: {
     formats: ['image/avif', 'image/webp'],
-    remotePatterns: [
-      { protocol: 'https', hostname: 'qyverix.in' },
-      { protocol: 'https', hostname: 'www.qyverix.in' },
-    ],
+    // Every image is self-hosted: the generated plates and the client
+    // photography both live in /public, so there is no remote host to allow.
+    // Adding one back also means adding it to `remotePatterns` here.
+    remotePatterns: [],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1440, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 220, 384],
+    minimumCacheTTL: 31536000,
   },
   async headers() {
     return [

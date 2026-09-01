@@ -7,6 +7,8 @@ type RevealProps = {
   delay?: number;
   y?: number;
   className?: string;
+  /** Passed through — callers use it for CSS custom properties. */
+  style?: React.CSSProperties;
   as?: 'div' | 'section' | 'li' | 'article' | 'header';
 };
 
@@ -16,6 +18,7 @@ export default function Reveal({
   delay = 0,
   y = 22,
   className,
+  style,
   as = 'div',
 }: RevealProps) {
   const reduce = useReducedMotion();
@@ -23,12 +26,17 @@ export default function Reveal({
 
   if (reduce) {
     const Plain = as;
-    return <Plain className={className}>{children}</Plain>;
+    return (
+      <Plain className={className} style={style}>
+        {children}
+      </Plain>
+    );
   }
 
   return (
     <Tag
       className={className}
+      style={style}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}

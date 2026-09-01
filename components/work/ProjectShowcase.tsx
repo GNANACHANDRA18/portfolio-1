@@ -1,11 +1,13 @@
 'use client';
 
 import Image from 'next/image';
+import { img } from '@/lib/media';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import MagneticButton from '@/components/MagneticButton';
 import { projects, type Project } from '@/data/projects';
+import FactStrip from '@/components/FactStrip';
 
 /**
  * Sticky index that tracks whichever project is currently in view.
@@ -107,7 +109,7 @@ function ProjectPanel({
               style={reduce ? undefined : { y: imageY, scale: imageScale }}
             >
               <Image
-                src={project.image}
+                {...img(project.media.card)}
                 alt={`${project.name} — ${project.tagline}`}
                 fill
                 sizes="(max-width: 1280px) 100vw, 1200px"
@@ -190,16 +192,7 @@ function ProjectPanel({
         </div>
 
         {/* Information strip */}
-        <dl className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-4">
-          {project.facts.map((fact) => (
-            <div key={fact.label} className="bg-surface/70 px-5 py-6">
-              <dt className="font-mono text-[10px] tracking-[0.18em] text-faint uppercase">
-                {fact.label}
-              </dt>
-              <dd className="mt-2.5 text-[15px] text-fg">{fact.value}</dd>
-            </div>
-          ))}
-        </dl>
+        <FactStrip facts={project.facts} className="mt-14" />
 
         {/* Ownership */}
         <div className="mt-5 grid gap-5 lg:grid-cols-2">

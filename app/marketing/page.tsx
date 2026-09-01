@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { img } from '@/lib/media';
 import Link from 'next/link';
 import NoirHero from '@/components/marketing/NoirHero';
 import MindsetAreas from '@/components/marketing/MindsetAreas';
@@ -9,6 +10,12 @@ import ContentEngine from '@/components/marketing/ContentEngine';
 import ThinkingGrid from '@/components/marketing/ThinkingGrid';
 import TriangleSignature from '@/components/marketing/TriangleSignature';
 import TopicsMarquee from '@/components/marketing/TopicsMarquee';
+import BigStatements from '@/components/system/BigStatements';
+import Constellation from '@/components/system/Constellation';
+import PlaybookSwitcher from '@/components/marketing/PlaybookSwitcher';
+import AttentionMeters from '@/components/marketing/AttentionMeters';
+import ProcessRail from '@/components/ProcessRail';
+import ChipCloud from '@/components/ChipCloud';
 import ScrollSequence from '@/components/system/ScrollSequence';
 import SectionHead from '@/components/ai/SectionHead';
 import FlowStrip from '@/components/FlowStrip';
@@ -16,14 +23,26 @@ import MagneticButton from '@/components/MagneticButton';
 import Reveal from '@/components/Reveal';
 import {
   aiBusinessAreas,
+  bigStatements,
   brandLadder,
   businessPhilosophy,
   businessSoftwareChain,
   clientSuccessChain,
   cmoResponsibilities,
+  contentBranches,
   contentFunnel,
   pitchFlow,
+  strategicFramework,
 } from '@/data/business';
+import {
+  attentionMetrics,
+  brandTouchpoints,
+  clientJourney,
+  cmoMindset,
+  cmoNodes,
+  createdArtefacts,
+  pricingParts,
+} from '@/data/marketing';
 import { projects } from '@/data/projects';
 import { site } from '@/data/site';
 import { pageMetadata } from '@/lib/seo';
@@ -41,13 +60,7 @@ export default function MarketingPage() {
       <NoirHero />
 
       {/* Big statement */}
-      <ScrollSequence
-        lines={[
-          'MARKETING GETS ATTENTION.',
-          'BUSINESS CREATES VALUE.',
-          'GREAT STRATEGY CONNECTS BOTH.',
-        ]}
-      />
+      <ScrollSequence lines={bigStatements.map((pair) => pair.join(' '))} />
 
       {/* Mindset */}
       <section className="relative overflow-hidden py-24 md:py-36">
@@ -104,7 +117,7 @@ export default function MarketingPage() {
                 as="li"
                 key={item}
                 delay={Math.min(i * 0.04, 0.3)}
-                className="group bg-surface/60 px-6 py-8 transition-colors duration-400 hover:bg-elev"
+                className="cell-sweep group relative overflow-hidden bg-surface/60 px-6 py-8 transition-colors duration-400 hover:bg-elev"
               >
                 <span className="block font-mono text-[10px] tracking-[0.16em] text-faint">
                   {String(i + 1).padStart(2, '0')}
@@ -126,6 +139,26 @@ export default function MarketingPage() {
         </div>
       </section>
 
+      {/* The role, mapped */}
+      <section className="relative overflow-hidden py-24 md:py-36">
+        <div className="container-x">
+          <SectionHead
+            eyebrow="The surface"
+            lines={['ONE ROLE,', 'SIX SURFACES.']}
+            accentLines={[1]}
+            lede="Marketing, brand, client success, business development, content and the digital products that sell the work — held together rather than handed off."
+            align="center"
+            className="mb-16"
+          />
+          <Constellation
+            core="CMO"
+            coreNote="ONE OWNER"
+            nodes={cmoNodes}
+            idleHint="Hover a surface to see what it covers."
+          />
+        </div>
+      </section>
+
       {/* Pitch → business */}
       <section className="relative overflow-hidden border-t border-line py-24 md:py-36">
         <div className="container-x">
@@ -136,6 +169,13 @@ export default function MarketingPage() {
             className="mb-14"
           />
           <FlowStrip steps={pitchFlow} />
+
+          <div className="mt-20">
+            <p className="mb-10 font-mono text-[10.5px] tracking-[0.22em] text-accent uppercase">
+              The whole journey, step by step
+            </p>
+            <ProcessRail steps={clientJourney} />
+          </div>
         </div>
       </section>
 
@@ -150,6 +190,48 @@ export default function MarketingPage() {
               lede="Brief, scope, pricing, timeline and deliverables — assembled into something a business can actually decide on."
             />
             <ProposalAssembly />
+          </div>
+
+          <ul className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-5">
+            {pricingParts.map((part, i) => (
+              <Reveal
+                as="li"
+                key={part.label}
+                delay={i * 0.06}
+                style={{ '--sweep-delay': `${i * 1.2}s` } as React.CSSProperties}
+                className="cell-sweep relative overflow-hidden bg-surface/70 p-6"
+              >
+                <p className="font-mono text-[10px] tracking-[0.18em] text-accent uppercase">
+                  {part.label}
+                </p>
+                <p className="relative mt-3 text-[14px] leading-relaxed text-muted">
+                  {part.note}
+                </p>
+              </Reveal>
+            ))}
+          </ul>
+
+          <div className="mt-16">
+            <p className="mb-8 font-mono text-[10.5px] tracking-[0.22em] text-faint uppercase">
+              What actually gets produced
+            </p>
+            <ul className="grid gap-4 md:grid-cols-2">
+              {createdArtefacts.map((item, i) => (
+                <Reveal
+                  as="li"
+                  key={item.label}
+                  delay={i * 0.05}
+                  className="rounded-2xl border border-line bg-surface/60 p-7 transition-colors duration-500 hover:border-accent/30"
+                >
+                  <p className="font-mono text-[11px] tracking-[0.16em] text-fg uppercase">
+                    {item.label}
+                  </p>
+                  <p className="mt-3 text-[14.5px] leading-relaxed text-muted">
+                    {item.note}
+                  </p>
+                </Reveal>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
@@ -185,6 +267,13 @@ export default function MarketingPage() {
               </Reveal>
             ))}
           </ol>
+
+          <div className="mt-14">
+            <p className="mb-5 font-mono text-[10.5px] tracking-[0.2em] text-faint uppercase">
+              Every touchpoint it has to hold
+            </p>
+            <ChipCloud items={brandTouchpoints} />
+          </div>
 
           <Reveal className="mt-14">
             <p className="text-[clamp(1.5rem,4.6vw,3.6rem)] leading-none font-medium tracking-[-0.05em]">
@@ -313,7 +402,7 @@ export default function MarketingPage() {
                 >
                   <span className="relative block aspect-[16/11] overflow-hidden bg-elev">
                     <Image
-                      src={project.image}
+                      {...img(`${project.media.card}-noir`)}
                       alt={`${project.name} — ${project.tagline}`}
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
@@ -352,6 +441,70 @@ export default function MarketingPage() {
               engineering deliverables is not claimed
             </p>
           </Reveal>
+        </div>
+      </section>
+
+      {/* Mindset, stated */}
+      <BigStatements items={cmoMindset} />
+
+      {/* The framework the whole role runs on */}
+      <section className="relative overflow-hidden py-24 md:py-36">
+        <div className="container-x">
+          <SectionHead
+            eyebrow="Framework"
+            lines={['SEVEN VERBS,', 'IN ORDER.']}
+            accentLines={[1]}
+            lede="Understand before positioning, position before building, build before communicating. Skipping one is where most marketing goes wrong."
+            className="mb-14"
+          />
+          <ol className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+            {strategicFramework.map((item, i) => (
+              <Reveal
+                as="li"
+                key={item.verb}
+                delay={i * 0.05}
+                style={{ '--sweep-delay': `${(i % 4) * 1.4}s` } as React.CSSProperties}
+                className="cell-sweep relative overflow-hidden bg-surface/70 p-7"
+              >
+                <span className="font-mono text-[10px] tracking-[0.18em] text-faint">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <p className="relative mt-4 text-[clamp(1.1rem,2.4vw,1.5rem)] leading-tight font-medium tracking-[-0.035em] text-fg">
+                  {item.verb}
+                </p>
+                <p className="relative mt-1.5 text-[14px] text-muted">{item.noun}</p>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* Playbooks */}
+      <section className="relative overflow-hidden py-24 md:py-36">
+        <div className="container-x">
+          <SectionHead
+            eyebrow="Playbooks"
+            lines={['NOTHING HERE', 'IS IMPROVISED.']}
+            accentLines={[1]}
+            lede="Six sequences that run in a real week. Pick one to see how it actually goes."
+            className="mb-14"
+          />
+          <PlaybookSwitcher />
+        </div>
+      </section>
+
+      {/* What it is judged on */}
+      <section className="relative overflow-hidden bg-elev/60 py-24 md:py-36">
+        <div aria-hidden className="ai-grid pointer-events-none absolute inset-0" />
+        <div className="container-x relative">
+          <SectionHead
+            eyebrow="Measurement"
+            lines={['SIX QUESTIONS,', 'NOT SIX NUMBERS.']}
+            accentLines={[1]}
+            lede={`A percentage invented for a portfolio measures nothing. These ${attentionMetrics.length} questions are what the work is actually judged on.`}
+            className="mb-14"
+          />
+          <AttentionMeters />
         </div>
       </section>
 

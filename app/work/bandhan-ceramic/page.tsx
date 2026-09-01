@@ -12,7 +12,6 @@ export const metadata = pageMetadata({
   description:
     'Case study: Bandhan Ceramic, 5,000+ products across 13 Hyderabad stores — tile calculator, AR visualiser and architect trade pricing.',
   path: '/work/bandhan-ceramic',
-  image: project?.image,
 });
 
 export default function BandhanCeramicPage() {

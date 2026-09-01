@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { img } from '@/lib/media';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
@@ -81,7 +82,7 @@ export default function ProjectIndex() {
               className="pointer-events-none absolute top-1/2 right-0 z-0 hidden h-[260px] w-[380px] -translate-y-1/2 overflow-hidden rounded-2xl border border-line lg:block"
             >
               <Image
-                src={preview.image}
+                {...img(preview.media.portrait)}
                 alt=""
                 fill
                 sizes="380px"

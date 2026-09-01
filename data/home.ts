@@ -74,13 +74,25 @@ export const softwareSnippets: Record<string, string[]> = {
 
 export const qyverixJourney = ['PITCH', 'PROPOSAL', 'BRAND', 'BUILD', 'HANDOFF'];
 
-export const creativeAreas = [
+export type CreativeArea = {
+  id: string;
+  label: string;
+  line: string;
+  body: string;
+  href: string;
+  /** Key into the generated media manifest — this area's visual language. */
+  plate: string;
+  tint: string;
+};
+
+export const creativeAreas: CreativeArea[] = [
   {
     id: 'video',
     label: 'VIDEO',
     line: 'Video editing.',
     body: 'Short-form, brand and promotional cuts — concept through export.',
     href: '/video-editing',
+    plate: 'video-square',
     tint: 'var(--color-ai-violet)',
   },
   {
@@ -89,6 +101,7 @@ export const creativeAreas = [
     line: 'Social-media content.',
     body: 'Content built as a repeatable system across LinkedIn and Instagram.',
     href: '/social-media',
+    plate: 'social-square',
     tint: 'var(--color-ai-magenta)',
   },
   {
@@ -97,6 +110,7 @@ export const creativeAreas = [
     line: 'Marketing and visual communication.',
     body: 'Positioning, proposals and the message everything else hangs off.',
     href: '/marketing',
+    plate: 'marketing-pulse',
     tint: 'var(--color-ai-cyan)',
   },
 ];

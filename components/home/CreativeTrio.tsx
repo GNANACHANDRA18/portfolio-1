@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import Magnetic from '@/components/ai/Magnetic';
+import Media from '@/components/media/Media';
 import { creativeAreas } from '@/data/home';
 
 export default function CreativeTrio() {
@@ -75,7 +76,7 @@ export default function CreativeTrio() {
                   data-cursor="orb"
                   onMouseEnter={() => setActive(area.id)}
                   onFocus={() => setActive(area.id)}
-                  className="glass group relative block h-full overflow-hidden rounded-3xl p-8 transition-transform duration-500 hover:-translate-y-1.5 md:p-9"
+                  className="glass-panel glass-thin group relative block h-full overflow-hidden transition-transform duration-500 hover:-translate-y-1.5"
                   style={
                     isActive
                       ? {
@@ -92,7 +93,23 @@ export default function CreativeTrio() {
                     }}
                   />
 
-                  <span className="relative block">
+                  {/* The area's own visual language, seen through the glass. */}
+                  <span className="relative block aspect-[16/7] overflow-hidden">
+                    <Media
+                      src={area.plate}
+                      alt=""
+                      treatment="clean"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      inset
+                      imageClassName="brightness-[1.35] opacity-[0.8] transition-transform duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.07]"
+                    />
+                    <span
+                      aria-hidden
+                      className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-bg"
+                    />
+                  </span>
+
+                  <span className="relative block p-8 md:p-9">
                     <span
                       className="font-mono text-[11px] tracking-[0.2em] uppercase transition-colors duration-500"
                       style={{ color: isActive ? area.tint : undefined }}
@@ -100,7 +117,7 @@ export default function CreativeTrio() {
                       {area.label}
                     </span>
 
-                    <span className="mt-8 block text-[clamp(1.5rem,3vw,2.1rem)] leading-tight font-medium tracking-[-0.035em] text-fg">
+                    <span className="mt-6 block text-[clamp(1.5rem,3vw,2.1rem)] leading-tight font-medium tracking-[-0.035em] text-fg">
                       {area.line}
                     </span>
 

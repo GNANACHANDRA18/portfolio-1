@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { img } from '@/lib/media';
 import Link from 'next/link';
 import { useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
@@ -72,7 +73,7 @@ export default function BehindTheWork() {
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             >
               <Image
-                src={preview.image}
+                {...img(preview.media.square)}
                 alt={`${preview.name} case study preview`}
                 fill
                 sizes="480px"

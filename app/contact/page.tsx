@@ -7,6 +7,8 @@ import SocialCard from '@/components/SocialCard';
 import Reveal from '@/components/Reveal';
 import { site } from '@/data/site';
 import { pageMetadata } from '@/lib/seo';
+import PlateBackdrop from '@/components/media/PlateBackdrop';
+import { routePlate } from '@/data/visuals';
 
 export const metadata = pageMetadata({
   title: 'Contact',
@@ -20,6 +22,7 @@ export default function ContactPage() {
     <>
       {/* Opening */}
       <section className="ai-noise relative flex min-h-[92svh] items-center overflow-hidden pt-32 pb-16 md:pt-36">
+        <PlateBackdrop src={routePlate.contact} treatment="vignette" priority drift duration={36} />
         <Aurora
           blobs={[
             {
@@ -39,7 +42,7 @@ export default function ContactPage() {
           ]}
         />
 
-        <div className="container-x relative w-full">
+        <div className="container-x relative z-10 w-full">
           <p className="mb-9 font-mono text-[10.5px] tracking-[0.26em] text-faint uppercase">
             Contact
           </p>

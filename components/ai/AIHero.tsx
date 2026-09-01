@@ -5,6 +5,8 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import AIOrb from './AIOrb';
 import Aurora from './Aurora';
 import { heroKeywords } from '@/data/ai-page';
+import PlateBackdrop from '@/components/media/PlateBackdrop';
+import { routePlate } from '@/data/visuals';
 
 const LINES = [
   { text: 'I THINK WITH AI.', accent: false },
@@ -26,6 +28,7 @@ export default function AIHero() {
 
   return (
     <section className="ai-noise relative flex min-h-[100svh] items-center overflow-hidden pt-24 pb-16 md:pt-28">
+      <PlateBackdrop src={routePlate.ai} treatment="vignette" priority drift duration={32} />
       <Aurora
         blobs={[
           {

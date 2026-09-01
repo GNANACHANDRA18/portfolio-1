@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { navigation } from '@/data/site';
+import ChipCloud from '@/components/ChipCloud';
 
 export const metadata = {
   title: 'Page not found',
@@ -22,18 +22,10 @@ export default function NotFound() {
           still here.
         </p>
 
-        <ul className="mt-12 flex flex-wrap gap-2">
-          {navigation.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className="inline-block rounded-full border border-line px-4 py-2 text-[13.5px] text-muted transition-colors duration-300 hover:border-accent/50 hover:text-fg"
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <ChipCloud
+          className="mt-12"
+          items={navigation.map((item) => ({ label: item.label, href: item.href }))}
+        />
       </div>
     </section>
   );

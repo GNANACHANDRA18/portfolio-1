@@ -12,7 +12,6 @@ export const metadata = pageMetadata({
   description:
     'Case study: Living Lines, a premium tiles and bathware retailer in Visakhapatnam — three showrooms, brand catalogue and design-consultation flows.',
   path: '/work/living-lines',
-  image: project?.image,
 });
 
 export default function LivingLinesPage() {

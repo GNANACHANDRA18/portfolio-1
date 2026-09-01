@@ -29,6 +29,7 @@ import {
 } from '@/data/development';
 import { projects } from '@/data/projects';
 import { pageMetadata } from '@/lib/seo';
+import ChipCloud from '@/components/ChipCloud';
 
 export const metadata = pageMetadata({
   title: 'Software Development',
@@ -214,16 +215,7 @@ export default function DevelopmentPage() {
             className="mb-14"
           />
           <DeviceShowcase />
-          <ul className="mt-10 flex flex-wrap gap-2">
-            {responsiveNotes.map((note) => (
-              <li
-                key={note}
-                className="rounded-full border border-line bg-surface/70 px-4 py-2 text-[13.5px] text-muted"
-              >
-                {note}
-              </li>
-            ))}
-          </ul>
+          <ChipCloud items={responsiveNotes} className="mt-10" tint="var(--color-ai-blue)" />
         </div>
       </section>
 

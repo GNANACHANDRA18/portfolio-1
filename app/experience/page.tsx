@@ -1,11 +1,16 @@
 import SectionHead from '@/components/ai/SectionHead';
 import Aurora from '@/components/ai/Aurora';
-import Timeline from '@/components/Timeline';
+import ParallelRoles from '@/components/experience/ParallelRoles';
+import ProcessRail from '@/components/ProcessRail';
+import FactStrip from '@/components/FactStrip';
+import Marquee from '@/components/Marquee';
 import MagneticButton from '@/components/MagneticButton';
 import Reveal from '@/components/Reveal';
-import { roles } from '@/data/experience';
+import { processSteps, roles } from '@/data/experience';
 import { site } from '@/data/site';
 import { pageMetadata } from '@/lib/seo';
+import PlateBackdrop from '@/components/media/PlateBackdrop';
+import { routePlate } from '@/data/visuals';
 
 export const metadata = pageMetadata({
   title: 'Experience',
@@ -18,6 +23,7 @@ export default function ExperiencePage() {
   return (
     <>
       <section className="ai-noise relative flex min-h-[78svh] items-center overflow-hidden pt-32 pb-16 md:pt-36">
+        <PlateBackdrop src={routePlate.marketingFlywheel} treatment="backdrop" priority />
         <Aurora
           blobs={[
             {
@@ -37,7 +43,7 @@ export default function ExperiencePage() {
           ]}
         />
 
-        <div className="container-x relative w-full">
+        <div className="container-x relative z-10 w-full">
           <p className="mb-9 font-mono text-[10.5px] tracking-[0.26em] text-faint uppercase">
             Experience
           </p>
@@ -47,12 +53,41 @@ export default function ExperiencePage() {
             accentLines={[2]}
             lede="Not a sequence of jobs — three responsibilities held at the same time, which is the point."
           />
+
+          <FactStrip
+            className="mt-14"
+            facts={[
+              { label: 'Roles held', value: String(roles.length) },
+              {
+                label: 'Responsibilities',
+                value: String(
+                  roles.reduce((n, role) => n + role.responsibilities.length, 0),
+                ),
+              },
+              { label: 'Company', value: site.company.name },
+              { label: 'Running', value: 'In parallel' },
+            ]}
+          />
         </div>
       </section>
 
       <section className="relative overflow-hidden pb-24 md:pb-36">
         <div className="container-x">
-          <Timeline roles={roles} />
+          <ParallelRoles roles={roles} />
+        </div>
+      </section>
+
+      {/* How the work actually runs — the method under all three lanes. */}
+      <section className="relative overflow-hidden py-24 md:py-36">
+        <div className="container-x">
+          <SectionHead
+            eyebrow="Method"
+            lines={['HOW A PIECE', 'OF WORK RUNS.']}
+            accentLines={[1]}
+            lede="The same six steps whichever lane the work arrives in."
+            className="mb-16"
+          />
+          <ProcessRail steps={processSteps} />
         </div>
       </section>
 
@@ -77,6 +112,14 @@ export default function ExperiencePage() {
             </p>
           </Reveal>
         </div>
+      </section>
+
+      <section className="relative overflow-hidden border-y border-line py-14">
+        <Marquee
+          items={roles.flatMap((role) => role.responsibilities)}
+          label="Everything these roles cover:"
+          speed={52}
+        />
       </section>
 
       <section className="relative overflow-hidden py-24 md:py-36">

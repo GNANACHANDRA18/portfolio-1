@@ -6,6 +6,8 @@ import IntelligenceField from './IntelligenceField';
 import Aurora from '@/components/ai/Aurora';
 import Magnetic from '@/components/ai/Magnetic';
 import { site } from '@/data/site';
+import PlateBackdrop from '@/components/media/PlateBackdrop';
+import { routePlate } from '@/data/visuals';
 
 const LINES = [
   { text: 'I BUILD', accent: false },
@@ -28,6 +30,7 @@ export default function HomeHero() {
 
   return (
     <section className="ai-noise relative flex min-h-[104svh] items-center overflow-hidden pt-32 pb-20 md:pt-36">
+      <PlateBackdrop src={routePlate.home} treatment="vignette" priority drift duration={30} />
       <Aurora
         blobs={[
           {

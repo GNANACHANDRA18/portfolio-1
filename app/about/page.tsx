@@ -4,8 +4,12 @@ import AboutStory from '@/components/about/AboutStory';
 import Intersection from '@/components/about/Intersection';
 import Principles from '@/components/about/Principles';
 import DoMenu from '@/components/about/DoMenu';
+import CreativeReel from '@/components/about/CreativeReel';
+import ToolHalfLife from '@/components/about/ToolHalfLife';
+import GlassSignature from '@/components/about/GlassSignature';
 import WorkingModel from '@/components/about/WorkingModel';
 import DigitalIdCard from '@/components/about/DigitalIdCard';
+import PlateBackdrop from '@/components/media/PlateBackdrop';
 import Constellation from '@/components/system/Constellation';
 import ScrollSequence from '@/components/system/ScrollSequence';
 import BehindTheWork from '@/components/work/BehindTheWork';
@@ -15,17 +19,18 @@ import Aurora from '@/components/ai/Aurora';
 import FlowStrip from '@/components/FlowStrip';
 import MagneticButton from '@/components/MagneticButton';
 import Reveal from '@/components/Reveal';
+import ChipCloud from '@/components/ChipCloud';
 import {
   aboutPhilosophy,
   aiLoop,
   qyverixFlow,
   qyverixResponsibilities,
   roleNodes,
-  thinkingColumn,
-  toolsColumn,
 } from '@/data/about';
 import { site } from '@/data/site';
 import { pageMetadata } from '@/lib/seo';
+import Marquee from '@/components/Marquee';
+import { routePlate } from '@/data/visuals';
 
 export const metadata = pageMetadata({
   title: 'About',
@@ -55,6 +60,15 @@ export default function AboutPage() {
             coreNote="THE OVERLAP"
             nodes={roleNodes}
             idleHint="Hover a role to see what it actually means."
+          />
+        </div>
+
+        {/* The same eight roles, moving — full-bleed, outside the container. */}
+        <div className="mt-16 border-y border-line py-8">
+          <Marquee
+            items={roleNodes.map((node) => node.label)}
+            label="The roles:"
+            speed={38}
           />
         </div>
       </section>
@@ -142,16 +156,7 @@ export default function AboutPage() {
             <p className="mb-5 font-mono text-[11px] tracking-[0.2em] text-faint uppercase">
               Responsibilities
             </p>
-            <ul className="flex flex-wrap gap-2">
-              {qyverixResponsibilities.map((item) => (
-                <li
-                  key={item}
-                  className="rounded-full border border-line bg-surface/70 px-4 py-2 text-[13.5px] text-muted"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
+            <ChipCloud items={qyverixResponsibilities} />
           </Reveal>
 
           <div className="mt-12">
@@ -164,53 +169,54 @@ export default function AboutPage() {
 
       <DoMenu />
 
-      {/* Software */}
+      {/* Build / care — the two halves of the same job, read as one section. */}
       <section className="relative overflow-hidden py-24 md:py-36">
-        <div className="container-x">
-          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-            <SectionHead
-              eyebrow="Software"
-              lines={['I LIKE', 'BUILDING THINGS.']}
-              accentLines={[1]}
-              lede="Websites, digital products and software experiences that solve practical business problems."
-            />
-            <div className="lg:pt-6">
-              <FlowStrip
-                steps={['IDEA', 'SYSTEM', 'INTERFACE', 'CODE', 'PRODUCT']}
-              />
+        <PlateBackdrop src={routePlate.developmentStack} drift duration={34} />
+        <div className="container-x relative">
+          <SectionHead
+            eyebrow="Software & marketing"
+            lines={['BUILDING IT', 'IS ONLY HALF', 'THE WORK.']}
+            accentLines={[2]}
+            lede="Websites, digital products and software experiences that solve practical business problems — and then the part most builders skip."
+            className="mb-14"
+          />
+
+          <div className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-2">
+            <div className="bg-surface/70 p-8 md:p-11">
+              <p className="mb-7 font-mono text-[10.5px] tracking-[0.2em] text-faint uppercase">
+                First half / build
+              </p>
+              <FlowStrip steps={['IDEA', 'SYSTEM', 'INTERFACE', 'CODE', 'PRODUCT']} />
               <div className="mt-9">
                 <MagneticButton href="/development" variant="outline">
                   View development
                 </MagneticButton>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Marketing */}
-      <section className="relative overflow-hidden py-24 md:py-36">
-        <div className="container-x">
-          <SectionHead
-            lines={['BUILDING IT', 'IS ONLY HALF', 'THE WORK.']}
-            className="mb-10"
-          />
-          <Reveal>
-            <p className="ai-spectrum text-[clamp(1.7rem,5.4vw,4.4rem)] leading-[0.98] font-medium tracking-[-0.05em]">
-              PEOPLE NEED
-              <br />
-              TO CARE.
-            </p>
-            <p className="mt-8 max-w-xl text-[16px] leading-relaxed text-muted md:text-[17px]">
-              That&rsquo;s where marketing, positioning, content and
-              communication become part of the product story.
-            </p>
-            <div className="mt-10">
-              <MagneticButton href="/marketing" variant="outline">
-                Explore marketing
-              </MagneticButton>
+            <div className="bg-surface/70 p-8 md:p-11">
+              <p className="mb-7 font-mono text-[10.5px] tracking-[0.2em] text-accent uppercase">
+                Second half / care
+              </p>
+              <Reveal>
+                <p className="ai-spectrum text-[clamp(1.5rem,4vw,3rem)] leading-[0.98] font-medium tracking-[-0.05em]">
+                  PEOPLE NEED
+                  <br />
+                  TO CARE.
+                </p>
+                <p className="mt-7 max-w-md text-[16px] leading-relaxed text-muted">
+                  A product nobody understands is indistinguishable from one that
+                  was never shipped. Positioning, content and communication are
+                  part of the build, not a phase after it.
+                </p>
+                <div className="mt-9">
+                  <MagneticButton href="/marketing" variant="outline">
+                    Explore marketing
+                  </MagneticButton>
+                </div>
+              </Reveal>
             </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
@@ -224,50 +230,7 @@ export default function AboutPage() {
             className="mb-14"
           />
 
-          <div className="grid gap-4 md:grid-cols-3">
-            {[
-              {
-                label: 'VIDEO',
-                href: '/video-editing',
-                items: ['Video editing', 'Short-form', 'Brand film'],
-              },
-              {
-                label: 'SOCIAL',
-                href: '/social-media',
-                items: ['Social media', 'Content creation', 'Digital presence'],
-              },
-              {
-                label: 'VISUAL',
-                href: '/marketing',
-                items: ['Visual communication', 'Creative direction', 'Brand'],
-              },
-            ].map((panel, i) => (
-              <Reveal key={panel.label} delay={i * 0.08}>
-                <Link
-                  href={panel.href}
-                  data-cursor="explore"
-                  className="glass group block h-full rounded-3xl p-8 transition-transform duration-500 hover:-translate-y-1.5"
-                >
-                  <span className="font-mono text-[11px] tracking-[0.2em] text-faint uppercase">
-                    {panel.label}
-                  </span>
-                  <ul className="mt-8 space-y-2">
-                    {panel.items.map((item) => (
-                      <li key={item} className="text-[15px] text-muted">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-
-          <div className="mt-12">
-            <MagneticButton href="/video-editing" variant="solid">
-              Explore creative work
-            </MagneticButton>
-          </div>
+          <CreativeReel />
         </div>
       </section>
 
@@ -300,39 +263,7 @@ export default function AboutPage() {
             className="mb-14"
           />
 
-          <div className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-2">
-            <div className="bg-surface/70 p-8 md:p-10">
-              <p className="mb-6 font-mono text-[10.5px] tracking-[0.2em] text-faint uppercase">
-                Tools
-              </p>
-              <ul className="space-y-3">
-                {toolsColumn.map((item) => (
-                  <li
-                    key={item}
-                    className="border-b border-line pb-3 text-[16px] text-muted last:border-0"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-surface/70 p-8 md:p-10">
-              <p className="mb-6 font-mono text-[10.5px] tracking-[0.2em] text-accent uppercase">
-                What matters
-              </p>
-              <ul className="space-y-3">
-                {thinkingColumn.map((item) => (
-                  <li
-                    key={item}
-                    className="border-b border-line pb-3 text-[16px] text-fg last:border-0"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          <ToolHalfLife />
 
           <Reveal className="mt-14">
             <p className="text-[clamp(1.5rem,4.2vw,3.2rem)] leading-[1.06] font-medium tracking-[-0.04em] text-fg">
@@ -361,20 +292,22 @@ export default function AboutPage() {
 
       <ScrollSequence lines={aboutPhilosophy} />
 
-      {/* Quote */}
-      <section className="relative overflow-hidden py-28 md:py-40">
-        <div className="container-x">
+      {/* Quote — signed. The plate behind it is what the glass refracts. */}
+      <section className="ai-noise relative overflow-hidden py-28 md:py-40">
+        <PlateBackdrop src={routePlate.about} treatment="vignette" drift duration={30} />
+        <div className="container-x relative">
           <Reveal>
             <blockquote className="max-w-5xl">
               <p className="text-[clamp(1.5rem,4.6vw,3.6rem)] leading-[1.14] font-medium tracking-[-0.04em] text-fg">
                 &ldquo;I want to understand how things work, how people
                 experience them, and how to make them better.&rdquo;
               </p>
-              <footer className="mt-10 font-mono text-[11px] tracking-[0.2em] text-faint uppercase">
-                — Gnana Chandra
-              </footer>
             </blockquote>
           </Reveal>
+
+          <div className="mt-16 md:mt-20">
+            <GlassSignature />
+          </div>
         </div>
       </section>
 
@@ -387,32 +320,53 @@ export default function AboutPage() {
             className="mb-12"
           />
 
-          <a
-            href={site.instagram.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-cursor="follow"
-            className="group flex items-center justify-between gap-6 border-t border-b border-line py-8 transition-colors duration-400 hover:border-accent/40"
-          >
-            <span>
-              <span className="block font-mono text-[10.5px] tracking-[0.2em] text-faint uppercase">
-                Instagram
-              </span>
-              <span className="mt-3 block text-[clamp(1.3rem,3.4vw,2.4rem)] leading-tight font-medium tracking-[-0.035em] text-fg">
-                {site.instagram.handle}
-              </span>
-            </span>
-            <span
-              aria-hidden
-              className="text-[18px] text-faint transition-all duration-400 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-accent"
-            >
-              ↗
-            </span>
-          </a>
-
-          <p className="mt-6 font-mono text-[10.5px] tracking-[0.16em] text-faint uppercase">
-            Other verified profiles will be listed here as they are added.
-          </p>
+          {/* Verified profiles only — every row here is a `sameAs` signal. */}
+          <ul className="border-t border-line">
+            {[
+              {
+                label: 'Instagram',
+                handle: site.instagram.handle,
+                href: site.instagram.url,
+                note: 'Creative work and process',
+              },
+              ...site.profiles.map((url) => ({
+                label: 'GitHub',
+                handle: `@${url.split('/').pop()}`,
+                href: url,
+                note: 'Code and side projects',
+              })),
+            ].map((profile) => (
+              <li key={profile.href} className="border-b border-line">
+                <a
+                  href={profile.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor="follow"
+                  className="group flex items-center justify-between gap-6 py-8 transition-colors duration-400"
+                >
+                  <span>
+                    <span className="block font-mono text-[10.5px] tracking-[0.2em] text-faint uppercase">
+                      {profile.label}
+                    </span>
+                    <span className="mt-3 block text-[clamp(1.3rem,3.4vw,2.4rem)] leading-tight font-medium tracking-[-0.035em] text-fg transition-colors duration-400 group-hover:text-accent">
+                      {profile.handle}
+                    </span>
+                  </span>
+                  <span className="flex items-center gap-6">
+                    <span className="hidden text-[14px] text-muted md:block">
+                      {profile.note}
+                    </span>
+                    <span
+                      aria-hidden
+                      className="text-[18px] text-faint transition-all duration-400 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-accent"
+                    >
+                      ↗
+                    </span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

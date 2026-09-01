@@ -1,7 +1,8 @@
 export type AIProject = {
   id: string;
   name: string;
-  /** Cover image — a path under /public or a remote URL allowed in next.config. */
+  /** Cover image — a path under /public. Remote hosts are not allowed;
+   *  add one to `remotePatterns` in next.config.mjs first if that changes. */
   image?: string;
   problem: string;
   architecture: string[];

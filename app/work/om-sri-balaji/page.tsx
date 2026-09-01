@@ -12,7 +12,6 @@ export const metadata = pageMetadata({
   description:
     'Case study: Om Sri Balaji Electricals, trading in Ongole since 1962 — authorised brand catalogue, trade pricing and WhatsApp enquiry flows.',
   path: '/work/om-sri-balaji',
-  image: project?.image,
 });
 
 export default function OmSriBalajiPage() {

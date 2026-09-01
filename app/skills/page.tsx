@@ -8,6 +8,11 @@ import MagneticButton from '@/components/MagneticButton';
 import Reveal from '@/components/Reveal';
 import { skillGroups, techStack } from '@/data/skills';
 import { pageMetadata } from '@/lib/seo';
+import PlateBackdrop from '@/components/media/PlateBackdrop';
+import ChipCloud from '@/components/ChipCloud';
+import FactStrip from '@/components/FactStrip';
+import Marquee from '@/components/Marquee';
+import { routePlate } from '@/data/visuals';
 
 export const metadata = pageMetadata({
   title: 'Skills & Capabilities',
@@ -30,6 +35,7 @@ export default function SkillsPage() {
   return (
     <>
       <section className="ai-noise relative flex min-h-[76svh] items-center overflow-hidden pt-32 pb-16 md:pt-36">
+        <PlateBackdrop src={routePlate.developmentSquare} treatment="backdrop" priority />
         <Aurora
           blobs={[
             {
@@ -49,7 +55,7 @@ export default function SkillsPage() {
           ]}
         />
 
-        <div className="container-x relative w-full">
+        <div className="container-x relative z-10 w-full">
           <p className="mb-9 font-mono text-[10.5px] tracking-[0.26em] text-faint uppercase">
             Capability
           </p>
@@ -60,21 +66,15 @@ export default function SkillsPage() {
             lede="Described rather than scored. A percentage on a skill bar is a number somebody invented — these are the areas the work actually happens in."
           />
 
-          <dl className="mt-14 grid grid-cols-2 gap-6 border-t border-line pt-7 sm:grid-cols-4">
-            {[
+          <FactStrip
+            className="mt-14"
+            facts={[
               { label: 'Areas', value: String(total) },
               { label: 'Disciplines', value: String(skillGroups.length) },
               { label: 'Primary', value: 'AI × Software × Marketing' },
               { label: 'Source', value: 'data/skills.ts' },
-            ].map((item) => (
-              <div key={item.label}>
-                <dt className="font-mono text-[10px] tracking-[0.18em] text-faint uppercase">
-                  {item.label}
-                </dt>
-                <dd className="mt-2 text-[14.5px] text-fg">{item.value}</dd>
-              </div>
-            ))}
-          </dl>
+            ]}
+          />
         </div>
       </section>
 
@@ -140,16 +140,7 @@ export default function SkillsPage() {
                 <h3 className="font-mono text-[11px] tracking-[0.16em] text-fg uppercase">
                   {group.title}
                 </h3>
-                <ul className="mt-6 flex flex-wrap gap-2">
-                  {group.items.map((item) => (
-                    <li
-                      key={item}
-                      className="rounded-full border border-line bg-elev px-3.5 py-1.5 text-[13px] text-muted transition-colors duration-300 hover:border-accent/40 hover:text-fg"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                <ChipCloud items={group.items} size="sm" className="mt-6" />
               </Reveal>
             ))}
           </div>
@@ -171,6 +162,14 @@ export default function SkillsPage() {
             </p>
           </Reveal>
         </div>
+      </section>
+
+      <section className="relative overflow-hidden border-y border-line py-14">
+        <Marquee
+          items={techStack.flatMap((group) => group.items)}
+          label="The stack:"
+          speed={46}
+        />
       </section>
 
       <section className="relative overflow-hidden py-24 md:py-36">

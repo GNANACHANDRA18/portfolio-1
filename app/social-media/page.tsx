@@ -1,14 +1,20 @@
 import Image from 'next/image';
+import { img } from '@/lib/media';
 import SectionHead from '@/components/ai/SectionHead';
 import Aurora from '@/components/ai/Aurora';
 import FlowStrip from '@/components/FlowStrip';
 import BulletGrid from '@/components/BulletGrid';
+import PostAnatomy from '@/components/social/PostAnatomy';
+import CadenceGrid from '@/components/social/CadenceGrid';
+import ReelWall from '@/components/ReelWall';
 import MagneticButton from '@/components/MagneticButton';
 import Reveal from '@/components/Reveal';
 import { socialCapabilities } from '@/data/services';
 import { socialFlow } from '@/data/experience';
 import { site } from '@/data/site';
 import { pageMetadata } from '@/lib/seo';
+import PlateBackdrop from '@/components/media/PlateBackdrop';
+import { routePlate } from '@/data/visuals';
 
 export const metadata = pageMetadata({
   title: 'Social Media & Digital Presence',
@@ -21,6 +27,7 @@ export default function SocialMediaPage() {
   return (
     <>
       <section className="ai-noise relative flex min-h-[82svh] items-center overflow-hidden pt-32 pb-16 md:pt-36">
+        <PlateBackdrop src={routePlate.social} treatment="vignette" priority drift duration={30} />
         <Aurora
           blobs={[
             {
@@ -40,7 +47,7 @@ export default function SocialMediaPage() {
           ]}
         />
 
-        <div className="container-x relative w-full">
+        <div className="container-x relative z-10 w-full">
           <p className="mb-9 font-mono text-[10.5px] tracking-[0.26em] text-faint uppercase">
             Social
           </p>
@@ -76,6 +83,33 @@ export default function SocialMediaPage() {
             className="mb-14"
           />
           <FlowStrip steps={socialFlow} />
+        </div>
+      </section>
+
+      {/* The system, shown twice: one post taken apart, then a month of them. */}
+      <section className="relative overflow-hidden py-24 md:py-36">
+        <div className="container-x">
+          <SectionHead
+            eyebrow="Anatomy"
+            lines={['A POST IS', 'FIVE DECISIONS.']}
+            accentLines={[1]}
+            lede="Nothing here is written on instinct — every part of a post is there for a stated reason."
+            className="mb-14"
+          />
+          <PostAnatomy />
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden bg-elev/60 py-24 md:py-36">
+        <div className="container-x">
+          <SectionHead
+            eyebrow="Cadence"
+            lines={['SLOTS FIRST.', 'IDEAS SECOND.']}
+            accentLines={[1]}
+            lede="A calendar that repeats is what keeps content going in a week where nothing feels inspiring."
+            className="mb-14"
+          />
+          <CadenceGrid />
         </div>
       </section>
 
@@ -123,6 +157,25 @@ export default function SocialMediaPage() {
         </div>
       </section>
 
+      {/* Published reels — the content work itself, not a description of it. */}
+      <section className="relative overflow-hidden py-24 md:py-36">
+        <div className="container-x">
+          <SectionHead
+            eyebrow="Published"
+            lines={['THE CONTENT', 'ITSELF.']}
+            accentLines={[1]}
+            lede="Reels published on Instagram, embedded from the original posts — the caption, the view count and the account stay where they belong."
+            className="mb-14"
+          />
+          <ReelWall />
+          <div className="mt-10">
+            <MagneticButton href={site.instagram.url} external variant="outline">
+              See every reel on Instagram
+            </MagneticButton>
+          </div>
+        </div>
+      </section>
+
       {/* Editorial social card */}
       <section className="relative overflow-hidden py-24 md:py-36">
         <div className="container-x">
@@ -164,7 +217,7 @@ export default function SocialMediaPage() {
                 <span className="relative block overflow-hidden rounded-[27px] border-[3px] border-bg bg-elev">
                   <span className="relative block aspect-[576/647]">
                     <Image
-                      src={site.portrait.src}
+                      {...img('portrait')}
                       alt={site.portrait.alt}
                       fill
                       sizes="(max-width: 1024px) 88vw, 380px"

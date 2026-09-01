@@ -160,23 +160,7 @@ export const workingModel = [
   'LEARN',
 ];
 
-export const toolsColumn = [
-  'AI',
-  'Code',
-  'Software',
-  'Design',
-  'Automation',
-  'Content',
-];
 
-export const thinkingColumn = [
-  'Problem solving',
-  'Curiosity',
-  'Communication',
-  'Execution',
-  'Judgment',
-  'Learning',
-];
 
 export const aboutPhilosophy = ['LEARN.', 'BUILD.', 'CREATE.', 'IMPROVE.', 'REPEAT.'];
 
@@ -202,3 +186,70 @@ export const qyverixFlow = [
 ];
 
 export const aiLoop = ['RESEARCH', 'THINK', 'BUILD', 'VERIFY', 'IMPROVE'];
+
+/**
+ * The creative reel.
+ *
+ * Three static cards of bullet points is the least creative way to claim
+ * creative work, so each discipline gets a frame instead: its own plate from
+ * the generated image system, its own tint, and one sentence that could only
+ * be said about that discipline.
+ */
+export const creativeReel = [
+  {
+    id: 'video',
+    label: 'VIDEO',
+    href: '/video-editing',
+    plate: 'video-frames',
+    tint: 'var(--color-accent)',
+    meta: 'Concept → export',
+    line: 'A cut is an argument about where attention goes.',
+    body: 'Editing, short-form and brand film — built to survive the first three seconds and still land at the end.',
+    items: ['Video editing', 'Short-form', 'Brand film'],
+  },
+  {
+    id: 'social',
+    label: 'SOCIAL',
+    href: '/social-media',
+    plate: 'social-pulse',
+    tint: 'var(--color-ai-magenta)',
+    meta: 'One idea, published',
+    line: 'Reach is a system, not a lucky post.',
+    body: 'Content built as a repeatable engine: formats that can run weekly, on a calendar, without waiting for inspiration.',
+    items: ['Social media', 'Content creation', 'Digital presence'],
+  },
+  {
+    id: 'visual',
+    label: 'VISUAL',
+    href: '/marketing',
+    plate: 'marketing-strata',
+    tint: 'var(--color-ai-blue)',
+    meta: 'Look, then read',
+    line: 'People judge the design before they read the sentence.',
+    body: 'Creative direction and visual language for brands, decks and proposals — so the work looks like what it claims to be.',
+    items: ['Visual communication', 'Creative direction', 'Brand'],
+  },
+] as const;
+
+/**
+ * Tools have a shelf life; thinking does not. The two lists below are read as
+ * one sentence — which is why each side carries the reason it belongs there
+ * rather than sitting as a bare noun.
+ */
+export const toolShelf = [
+  { label: 'AI', note: 'New frontier model every few months.' },
+  { label: 'Code', note: 'Frameworks rewrite themselves each cycle.' },
+  { label: 'Software', note: 'Today\u2019s standard, tomorrow\u2019s migration.' },
+  { label: 'Design', note: 'Trends age faster than the work does.' },
+  { label: 'Automation', note: 'Every platform ships a new way to do it.' },
+  { label: 'Content', note: 'Formats change with the feed.' },
+];
+
+export const thinkingStack = [
+  { label: 'Problem solving', note: 'Transfers to every tool on the left.' },
+  { label: 'Curiosity', note: 'The reason the left column keeps updating.' },
+  { label: 'Communication', note: 'Decides whether good work gets used.' },
+  { label: 'Execution', note: 'Turns an opinion into something shipped.' },
+  { label: 'Judgment', note: 'Knowing which tool not to reach for.' },
+  { label: 'Learning', note: 'Compounds instead of expiring.' },
+];

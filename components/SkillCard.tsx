@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import type { SkillGroup } from '@/data/skills';
+import ChipCloud from '@/components/ChipCloud';
 
 /**
  * Interactive capability card. Expands to reveal the full skill list —
@@ -70,16 +71,11 @@ export default function SkillCard({
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <ul className="flex flex-wrap gap-2 border-t border-line px-7 py-6 md:px-8">
-              {group.skills.map((skill) => (
-                <li
-                  key={skill}
-                  className="rounded-full border border-line bg-elev px-3.5 py-1.5 text-[13px] text-muted transition-colors duration-300 hover:border-accent/40 hover:text-fg"
-                >
-                  {skill}
-                </li>
-              ))}
-            </ul>
+            <ChipCloud
+              items={group.skills}
+              size="sm"
+              className="border-t border-line px-7 py-6 md:px-8"
+            />
           </motion.div>
         )}
       </AnimatePresence>

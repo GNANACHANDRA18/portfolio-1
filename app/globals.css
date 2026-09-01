@@ -646,3 +646,411 @@
     cursor: auto !important;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/*  GLASS                                                              */
+/*                                                                     */
+/*  The site's imagery is abstract light, so the panels that sit on it  */
+/*  are treated as glass rather than as cards: a real backdrop blur, a  */
+/*  lit top edge, a slowly travelling rim light, and a specular         */
+/*  highlight that tracks the pointer. Every layer is a pseudo-element  */
+/*  or a gradient — no extra DOM, no runtime paint cost beyond the      */
+/*  backdrop filter itself.                                            */
+/* ------------------------------------------------------------------ */
+
+@property --glass-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.glass-panel {
+  --glass-tint: 255 255 255;
+  --glass-opacity: 0.055;
+  --glass-blur: 26px;
+  --glass-rim: var(--color-accent);
+  --glass-x: 50%;
+  --glass-y: 0%;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    150deg,
+    rgb(var(--glass-tint) / calc(var(--glass-opacity) * 1.9)) 0%,
+    rgb(var(--glass-tint) / var(--glass-opacity)) 42%,
+    rgb(var(--glass-tint) / calc(var(--glass-opacity) * 0.4)) 100%
+  );
+  backdrop-filter: blur(var(--glass-blur)) saturate(170%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(170%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+    0 30px 80px -50px rgba(0, 0, 0, 0.95);
+  transition:
+    transform var(--duration-base) var(--ease-out-expo),
+    box-shadow var(--duration-base) var(--ease-out-expo);
+}
+
+/* Rim light. A conic gradient masked to the border box, turning slowly, so
+   the edge catches light the way a real bevel would. */
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--glass-angle),
+    transparent 0deg,
+    color-mix(in oklab, var(--glass-rim) 85%, #fff) 42deg,
+    transparent 96deg,
+    rgba(255, 255, 255, 0.28) 190deg,
+    transparent 250deg,
+    color-mix(in oklab, var(--glass-rim) 60%, transparent) 320deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.55;
+  animation: glass-rim 14s linear infinite;
+}
+
+/* Specular highlight. Parked at the top by default; JS moves it to the
+   pointer on devices that have one. */
+.glass-panel::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    460px circle at var(--glass-x) var(--glass-y),
+    rgba(255, 255, 255, 0.13),
+    rgba(255, 255, 255, 0.04) 34%,
+    transparent 64%
+  );
+  opacity: 0.8;
+  transition: opacity var(--duration-base) var(--ease-out-expo);
+}
+
+/* Content sits above the rim and specular layers. A panel that holds its own
+   background layer — an image, a scrim — marks it with data-glass-bg so it
+   keeps its own positioning and stays underneath. */
+.glass-panel > :not([data-glass-bg]) {
+  position: relative;
+  z-index: 3;
+}
+
+.glass-panel > [data-glass-bg] {
+  z-index: 0;
+}
+
+@keyframes glass-rim {
+  to {
+    --glass-angle: 360deg;
+  }
+}
+
+/* Interactive variant — lifts, brightens and sharpens its rim on hover. */
+.glass-interactive:hover,
+.glass-interactive:focus-within {
+  transform: translateY(-4px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+    0 44px 110px -52px rgba(0, 0, 0, 0.98);
+}
+
+.glass-interactive:hover::before,
+.glass-interactive:focus-within::before {
+  opacity: 0.95;
+  animation-duration: 6s;
+}
+
+.glass-interactive:hover::after,
+.glass-interactive:focus-within::after {
+  opacity: 1;
+}
+
+/* Density variants. The same physics, different amounts of glass. */
+.glass-thin {
+  --glass-opacity: 0.03;
+  --glass-blur: 14px;
+}
+
+.glass-thick {
+  --glass-opacity: 0.085;
+  --glass-blur: 40px;
+}
+
+/* Surface-tuned rim colours, so glass on /ai is not gold. */
+.ai .glass-panel,
+.noir .glass-panel {
+  --glass-rim: var(--color-ai-violet);
+}
+
+/* Slow vertical drift for glass that floats over a plate rather than sitting
+   in the layout grid. */
+@keyframes glass-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+
+.glass-float {
+  animation: glass-float var(--float-duration, 11s) var(--ease-in-out-soft) infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+/* Refraction: a faint displaced copy of the backdrop, offset and inverted, so
+   the panel edge bends what is behind it. */
+.glass-refract::before {
+  box-shadow: inset 0 0 40px -12px rgba(255, 255, 255, 0.16);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Plates                                                             */
+/*                                                                     */
+/*  Generated imagery is always a backdrop, never content — it sits     */
+/*  under a scrim so type stays at full contrast on top of it.         */
+/* ------------------------------------------------------------------ */
+
+.plate-scrim::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--color-bg) 88%, transparent) 0%,
+      color-mix(in oklab, var(--color-bg) 46%, transparent) 38%,
+      color-mix(in oklab, var(--color-bg) 92%, transparent) 100%
+    );
+}
+
+.plate-vignette::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 70% 62% at 50% 46%,
+    transparent 30%,
+    color-mix(in oklab, var(--color-bg) 82%, transparent) 100%
+  );
+}
+
+/* Ken-Burns drift for a plate used as a hero backdrop. */
+@keyframes plate-drift {
+  0%,
+  100% {
+    transform: scale(1.06) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.14) translate3d(-1.5%, -1.5%, 0);
+  }
+}
+
+.plate-drift {
+  animation: plate-drift var(--plate-duration, 26s) var(--ease-in-out-soft) infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-panel::before,
+  .glass-float,
+  .plate-drift {
+    animation: none !important;
+  }
+  .glass-interactive:hover {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   CHIP CLOUD
+   Short-string lists that keep breathing. The float is CSS so a
+   list of twenty chips costs the compositor and nothing else;
+   the walking light on top of it is the component's own state.
+   ============================================================ */
+
+@keyframes chip-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -2.5px, 0);
+  }
+}
+
+.chip {
+  animation: chip-float 5.6s var(--ease-in-out-soft, ease-in-out) infinite;
+  animation-delay: var(--chip-delay, 0s);
+  will-change: transform;
+}
+
+.chip:hover {
+  animation-play-state: paused;
+  border-color: color-mix(in oklab, var(--chip-tint, var(--color-accent)) 60%, transparent);
+  color: var(--color-fg);
+  transform: translate3d(0, -2px, 0);
+}
+
+/* A light that crosses a grid of cells, one cell at a time. */
+@keyframes cell-sweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  35%,
+  65% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.cell-sweep::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--color-accent) 12%, transparent) 50%,
+    transparent 100%
+  );
+  animation: cell-sweep 7s linear infinite;
+  animation-delay: var(--sweep-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip,
+  .cell-sweep::after {
+    animation: none !important;
+  }
+}
+
+/* ============================================================
+   GLASS SIGNATURE
+   The name, set on a pane of glass at the end of /about. Four
+   loops run at once and never land on the same beat: a specular
+   band crossing the letters, a spectrum drifting under them, a
+   refracted ghost breathing behind the slab, and the pane's own
+   rim light. The tilt on top of it is the component's.
+   ============================================================ */
+
+@keyframes sig-shimmer {
+  0% {
+    background-position: -140% 0;
+  }
+  100% {
+    background-position: 240% 0;
+  }
+}
+
+.sig-letter {
+  background-image: linear-gradient(
+    100deg,
+    color-mix(in oklab, var(--color-fg) 78%, transparent) 0%,
+    color-mix(in oklab, var(--color-fg) 78%, transparent) 34%,
+    #fff 46%,
+    color-mix(in oklab, var(--color-accent) 92%, #fff) 52%,
+    color-mix(in oklab, var(--color-fg) 78%, transparent) 66%,
+    color-mix(in oklab, var(--color-fg) 78%, transparent) 100%
+  );
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sig-shimmer 7.5s linear infinite;
+  animation-delay: var(--sig-delay, 0s);
+}
+
+/* Refraction. A blurred, colour-split copy of the name sitting behind the
+   glass, drifting just enough to read as light bending rather than as a
+   second word. */
+@keyframes sig-refract {
+  0%,
+  100% {
+    transform: translate3d(-0.6%, 0, 0) scale(1.015);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate3d(0.6%, -1.5%, 0) scale(1.05);
+    opacity: 0.78;
+  }
+}
+
+.sig-ghost {
+  background-image: linear-gradient(
+    92deg,
+    var(--color-ai-violet),
+    var(--color-ai-blue) 34%,
+    var(--color-ai-cyan) 58%,
+    var(--color-accent) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: blur(18px);
+  animation: sig-refract 11s var(--ease-in-out-soft, ease-in-out) infinite;
+}
+
+/* The hairline under the name, drawn once and then travelled by a light. */
+@keyframes sig-underline {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.sig-underline::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--color-accent) 90%, #fff),
+    transparent
+  );
+  animation: sig-underline 5.5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sig-letter,
+  .sig-ghost,
+  .sig-underline::after {
+    animation: none !important;
+  }
+  .sig-letter {
+    background: none;
+    color: var(--color-fg);
+  }
+  .sig-ghost {
+    display: none;
+  }
+}

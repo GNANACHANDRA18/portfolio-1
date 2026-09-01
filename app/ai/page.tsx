@@ -15,6 +15,7 @@ import HumanPlusAI from '@/components/ai/HumanPlusAI';
 import AIQuality from '@/components/ai/AIQuality';
 import AIProjectLab from '@/components/ai/AIProjectLab';
 import AIPhilosophy from '@/components/ai/AIPhilosophy';
+import ImageSystem from '@/components/media/ImageSystem';
 import AIFinalCTA from '@/components/ai/AIFinalCTA';
 import { pageMetadata } from '@/lib/seo';
 
@@ -84,6 +85,14 @@ export default function AIPage() {
       <HumanPlusAI />
       <AIQuality />
       <AIProjectLab />
+
+      <ImageSystem
+        eyebrow="Image system"
+        lines={['THE IMAGERY', 'IS GENERATED TOO.']}
+        accentLines={[1]}
+        lede="Not one backdrop on this site came from a stock library. Six visual languages, each drawn from a seed by a build script, one per kind of page — shown here behind the glass they sit under everywhere else."
+      />
+
       <AIPhilosophy />
       <AIFinalCTA />
     </>

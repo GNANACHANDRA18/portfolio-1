@@ -3,11 +3,16 @@ import Aurora from '@/components/ai/Aurora';
 import EditTimeline from '@/components/video/EditTimeline';
 import VideoGallery from '@/components/VideoGallery';
 import BulletGrid from '@/components/BulletGrid';
+import HookLab from '@/components/video/HookLab';
+import ReelWall from '@/components/ReelWall';
+import { videos } from '@/data/videos';
 import MagneticButton from '@/components/MagneticButton';
 import Reveal from '@/components/Reveal';
 import { videoWork } from '@/data/services';
 import { site } from '@/data/site';
 import { pageMetadata } from '@/lib/seo';
+import PlateBackdrop from '@/components/media/PlateBackdrop';
+import { routePlate } from '@/data/visuals';
 
 export const metadata = pageMetadata({
   title: 'Video Editing & Creative Content',
@@ -20,6 +25,7 @@ export default function VideoEditingPage() {
   return (
     <>
       <section className="ai-noise relative flex min-h-[86svh] items-center overflow-hidden pt-32 pb-16 md:pt-36">
+        <PlateBackdrop src={routePlate.video} treatment="vignette" priority drift duration={34} />
         <Aurora
           blobs={[
             {
@@ -39,7 +45,7 @@ export default function VideoEditingPage() {
           ]}
         />
 
-        <div className="container-x relative w-full">
+        <div className="container-x relative z-10 w-full">
           <p className="mb-9 font-mono text-[10.5px] tracking-[0.26em] text-faint uppercase">
             Creative
           </p>
@@ -67,6 +73,20 @@ export default function VideoEditingPage() {
         </div>
       </section>
 
+      {/* The craft, shown without needing footage. */}
+      <section className="relative overflow-hidden py-24 md:py-36">
+        <div className="container-x">
+          <SectionHead
+            eyebrow="The first three seconds"
+            lines={['THE OPENING IS', 'THE WHOLE EDIT.']}
+            accentLines={[1]}
+            lede="Same video, three different openings — and three different outcomes before the content has even started."
+            className="mb-14"
+          />
+          <HookLab />
+        </div>
+      </section>
+
       <section className="relative overflow-hidden bg-elev/60 py-24 md:py-36">
         <div aria-hidden className="ai-grid pointer-events-none absolute inset-0" />
         <div className="container-x relative">
@@ -74,20 +94,22 @@ export default function VideoEditingPage() {
             eyebrow="Reel"
             lines={['SELECTED', 'VIDEO WORK.']}
             accentLines={[1]}
-            lede="This gallery is built to fill as pieces are published. Nothing here is placeholder work dressed up as a finished edit."
+            lede="Published edits, embedded from where they live. Nothing here is placeholder work dressed up as a finished piece."
             className="mb-12"
           />
-          <VideoGallery />
 
-          <Reveal className="mt-8">
-            <p className="text-[13px] leading-relaxed text-faint">
-              Adding a piece takes one entry in{' '}
-              <code className="rounded border border-line bg-surface px-1.5 py-0.5 font-mono text-[12px] text-muted">
-                data/videos.ts
-              </code>{' '}
-              — a title, category and either a hosted embed URL or a video file.
-            </p>
-          </Reveal>
+          <ReelWall />
+
+          {/* The landscape gallery only appears once there is landscape work
+              in it — six empty tiles beside real reels reads as a gap. */}
+          {videos.length > 0 && (
+            <div className="mt-16">
+              <p className="mb-7 font-mono text-[10.5px] tracking-[0.2em] text-accent uppercase">
+                Long-form / landscape
+              </p>
+              <VideoGallery />
+            </div>
+          )}
         </div>
       </section>
 

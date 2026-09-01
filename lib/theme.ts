@@ -28,8 +28,3 @@ export function themeClass(pathname: string): SurfaceTheme {
 export function accentFor(pathname: string): string {
   return themeFor(pathname) === 'lux' ? '#e9b872' : '#3b6bff';
 }
-
-/** Every surface is dark now. Kept so callers reading it stay correct. */
-export function isDark(): boolean {
-  return true;
-}

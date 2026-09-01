@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { img } from '@/lib/media';
 import { useRef } from 'react';
 import {
   motion,
@@ -72,7 +73,7 @@ export default function PortraitCard({
       >
         <div className="relative aspect-[576/647] w-full">
           <Image
-            src={site.portrait.src}
+            {...img('portrait')}
             alt={site.portrait.alt}
             fill
             priority={priority}

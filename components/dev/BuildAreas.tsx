@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { buildAreas } from '@/data/development';
+import ChipCloud from '@/components/ChipCloud';
 
 /** Five build areas; the hovered one expands into a preview. */
 export default function BuildAreas() {
@@ -79,16 +80,12 @@ export default function BuildAreas() {
                     <p className="max-w-lg text-[16px] leading-relaxed text-muted md:text-[17px]">
                       {area.body}
                     </p>
-                    <ul className="flex flex-wrap gap-2 md:justify-end">
-                      {area.detail.map((d) => (
-                        <li
-                          key={d}
-                          className="rounded-full border border-line bg-surface px-3.5 py-1.5 text-[12.5px] text-muted"
-                        >
-                          {d}
-                        </li>
-                      ))}
-                    </ul>
+                    <ChipCloud
+                      items={area.detail}
+                      size="sm"
+                      tint={area.tint}
+                      className="md:justify-end"
+                    />
                   </div>
                 </motion.div>
               )}

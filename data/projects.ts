@@ -14,7 +14,20 @@ export type Project = {
   builtBy: string;
   website: string;
   caseStudy: string;
+  /** Absolute-from-root path, used for share cards and structured data. */
   image: string;
+  /**
+   * Keys into the generated media manifest. Each source photograph is cropped
+   * four ways and graded three ways, so the same project can appear on /work
+   * in gold, on /ai in cool blue and on /marketing in flat monochrome without
+   * ever repeating the same rectangle twice on one page.
+   */
+  media: {
+    plate: string;
+    card: string;
+    portrait: string;
+    square: string;
+  };
   facts: { label: string; value: string }[];
   features: string[];
   overview: string;
@@ -41,7 +54,13 @@ export const projects: Project[] = [
     builtBy: 'Qyverix',
     website: 'https://livinglines.in/',
     caseStudy: 'https://qyverix.in/work/livinglines',
-    image: 'https://qyverix.in/assets/portfolio/livinglines.webp',
+    image: '/images/work/livinglines-card.webp',
+    media: {
+      plate: 'livinglines-plate',
+      card: 'livinglines-card',
+      portrait: 'livinglines-portrait',
+      square: 'livinglines-square',
+    },
     facts: [
       { label: 'Industry', value: 'Retail' },
       { label: 'Year', value: '2026' },
@@ -87,7 +106,13 @@ export const projects: Project[] = [
     builtBy: 'Qyverix',
     website: 'https://bandhanceramic.com/',
     caseStudy: 'https://qyverix.in/work/bandhan',
-    image: 'https://qyverix.in/assets/portfolio/bandhan.webp',
+    image: '/images/work/bandhan-card.webp',
+    media: {
+      plate: 'bandhan-plate',
+      card: 'bandhan-card',
+      portrait: 'bandhan-portrait',
+      square: 'bandhan-square',
+    },
     facts: [
       { label: 'Catalogue', value: '5,000+ products' },
       { label: 'Stores', value: '13' },
@@ -133,7 +158,13 @@ export const projects: Project[] = [
     builtBy: 'Qyverix',
     website: 'https://omsribalajielectrical.in/',
     caseStudy: 'https://qyverix.in/work/omsribalaji',
-    image: 'https://qyverix.in/assets/portfolio/omsribalaji.webp',
+    image: '/images/work/omsribalaji-card.webp',
+    media: {
+      plate: 'omsribalaji-plate',
+      card: 'omsribalaji-card',
+      portrait: 'omsribalaji-portrait',
+      square: 'omsribalaji-square',
+    },
     facts: [
       { label: 'Established', value: 'Since 1962' },
       { label: 'Industry', value: 'Retail' },

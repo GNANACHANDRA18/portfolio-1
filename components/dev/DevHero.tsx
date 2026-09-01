@@ -5,6 +5,8 @@ import { motion, useReducedMotion } from 'framer-motion';
 import Aurora from '@/components/ai/Aurora';
 import IntelligenceField from '@/components/home/IntelligenceField';
 import { heroWords } from '@/data/development';
+import PlateBackdrop from '@/components/media/PlateBackdrop';
+import { routePlate } from '@/data/visuals';
 
 const WORDS = ['FROM', 'IDEA', 'TO', 'PRODUCT.'];
 
@@ -14,6 +16,7 @@ export default function DevHero() {
 
   return (
     <section className="ai-noise relative flex min-h-[100svh] items-center overflow-hidden pt-32 pb-20 md:pt-36">
+      <PlateBackdrop src={routePlate.development} treatment="vignette" priority drift duration={34} />
       <Aurora
         blobs={[
           {
@@ -37,7 +40,7 @@ export default function DevHero() {
         <IntelligenceField />
       </div>
 
-      <div className="container-x relative w-full">
+      <div className="container-x relative z-10 w-full">
         <motion.p
           initial={reduce ? false : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

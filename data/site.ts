@@ -124,7 +124,3 @@ export const navigation: NavItem[] = [
   },
 ];
 
-/** Compact primary nav shown in the desktop header. */
-export const primaryNav = navigation.filter((item) =>
-  ['/about', '/ai', '/development', '/marketing', '/work'].includes(item.href),
-);

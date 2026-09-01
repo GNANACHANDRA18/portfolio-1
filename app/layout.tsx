@@ -83,10 +83,10 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     images: [
       {
-        url: site.portrait.src,
-        width: site.portrait.width,
-        height: site.portrait.height,
-        alt: site.portrait.alt,
+        url: `${site.url}/og/home`,
+        width: 1200,
+        height: 630,
+        alt: site.seo.title,
       },
     ],
   },
@@ -94,7 +94,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: site.seo.title,
     description: site.seo.description,
-    images: [site.portrait.src],
+    images: [`${site.url}/og/home`],
   },
   robots: {
     index: true,

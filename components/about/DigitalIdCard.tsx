@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { img } from '@/lib/media';
 import { useRef } from 'react';
 import {
   motion,
@@ -98,7 +99,7 @@ export default function DigitalIdCard() {
 
             <span className="relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl border border-line bg-elev">
               <Image
-                src={site.portrait.src}
+                {...img('portrait')}
                 alt={site.portrait.alt}
                 fill
                 sizes="80px"

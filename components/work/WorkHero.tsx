@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import Aurora from '@/components/ai/Aurora';
 import { projects } from '@/data/projects';
+import PlateBackdrop from '@/components/media/PlateBackdrop';
+import { routePlate } from '@/data/visuals';
 
 const LINES = [
   { text: 'THINGS', accent: false },
@@ -36,6 +38,7 @@ export default function WorkHero() {
 
   return (
     <section className="ai-noise relative flex min-h-[92svh] items-center overflow-hidden pt-32 pb-16 md:pt-36">
+      <PlateBackdrop src={routePlate.work} treatment="backdrop" priority />
       <Aurora
         blobs={[
           {
@@ -55,7 +58,7 @@ export default function WorkHero() {
         ]}
       />
 
-      <div className="container-x relative w-full">
+      <div className="container-x relative z-10 w-full">
         <motion.p
           initial={reduce ? false : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

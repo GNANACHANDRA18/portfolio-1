@@ -50,29 +50,7 @@ export const services: Service[] = [
   },
 ];
 
-export const buildList = [
-  'Business websites',
-  'Portfolio websites',
-  'E-commerce experiences',
-  'Web applications',
-  'Digital products',
-  'Client-facing platforms',
-  'AI-powered applications',
-];
 
-export const marketingResponsibilities = [
-  'Create proposals',
-  'Create pricing brochures',
-  'Develop LinkedIn content',
-  'Build demo portfolio websites for sales',
-  'Brand positioning',
-  'Client communication',
-  'Business development',
-  'Sales support',
-  'Client requirements',
-  'Client handoff',
-  'Digital marketing',
-];
 
 export const socialCapabilities = [
   'Social media management',

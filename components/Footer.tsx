@@ -25,7 +25,7 @@ export default function Footer() {
         <p className="text-[clamp(1.9rem,7.4vw,6.4rem)] leading-[0.9] font-medium tracking-[-0.055em] text-fg">
           CHEBOLU
           <br />
-          <span className="text-gradient">GNANACHANDRA</span>
+          <span className="sig-letter">GNANACHANDRA</span>
         </p>
 
         <p className="mt-7 font-mono text-[11px] tracking-[0.2em] text-muted uppercase">

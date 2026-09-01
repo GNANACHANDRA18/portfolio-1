@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { img } from '@/lib/media';
 import { motion, useReducedMotion } from 'framer-motion';
 import { site } from '@/data/site';
 
@@ -91,7 +92,7 @@ export default function SocialPresence() {
             <span className="relative block overflow-hidden rounded-[27px] border-[3px] border-bg bg-elev">
               <span className="relative block aspect-[576/647]">
                 <Image
-                  src={site.portrait.src}
+                  {...img('portrait')}
                   alt={site.portrait.alt}
                   fill
                   sizes="(max-width: 1024px) 88vw, 380px"
