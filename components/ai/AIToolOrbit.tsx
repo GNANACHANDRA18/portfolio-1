@@ -133,14 +133,19 @@ export default function AIToolOrbit() {
                   >
                     {current.label}
                   </p>
-                  <ul className="mt-6 space-y-2.5">
+                  <ul className="mt-6 grid grid-cols-1 gap-x-7 gap-y-2.5 sm:grid-cols-2">
                     {current.tools.map((tool, i) => (
                       <motion.li
                         key={tool}
                         initial={reduce ? false : { opacity: 0, x: 10 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.35, delay: 0.05 + i * 0.06 }}
-                        className="flex items-center gap-3 border-b border-line pb-2.5 text-[15.5px] text-fg last:border-0"
+                        // The stagger is capped: a ten-tool category should
+                        // still finish arriving before the eye gets there.
+                        transition={{
+                          duration: 0.28,
+                          delay: 0.03 + Math.min(i, 7) * 0.025,
+                        }}
+                        className="flex items-center gap-3 border-b border-line pb-2.5 text-[15.5px] text-fg last:border-0 sm:border-0 sm:pb-0"
                       >
                         <span
                           aria-hidden
