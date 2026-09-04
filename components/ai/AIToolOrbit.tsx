@@ -118,7 +118,7 @@ export default function AIToolOrbit() {
               ))}
             </div>
 
-            <div className="glass min-h-[240px] rounded-3xl p-8">
+            <div className="glass min-h-[190px] rounded-3xl p-6 sm:min-h-[240px] sm:p-8">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={current.id}
@@ -133,7 +133,7 @@ export default function AIToolOrbit() {
                   >
                     {current.label}
                   </p>
-                  <ul className="mt-6 grid grid-cols-1 gap-x-7 gap-y-2.5 sm:grid-cols-2">
+                  <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-3 sm:gap-x-7 sm:gap-y-2.5">
                     {current.tools.map((tool, i) => (
                       <motion.li
                         key={tool}
@@ -145,11 +145,13 @@ export default function AIToolOrbit() {
                           duration: 0.28,
                           delay: 0.03 + Math.min(i, 7) * 0.025,
                         }}
-                        className="flex items-center gap-3 border-b border-line pb-2.5 text-[15.5px] text-fg last:border-0 sm:border-0 sm:pb-0"
+                        className="flex items-start gap-2.5 text-[13.5px] leading-snug text-fg sm:gap-3 sm:text-[15.5px]"
                       >
                         <span
                           aria-hidden
-                          className="h-1.5 w-1.5 shrink-0 rounded-full"
+                          // Items are top-aligned so a wrapped tool name keeps
+                          // its dot on the first line, not floating mid-block.
+                          className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full sm:mt-[7px]"
                           style={{ background: current.tint }}
                         />
                         {tool}
