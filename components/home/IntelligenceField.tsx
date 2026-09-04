@@ -80,7 +80,7 @@ export default function IntelligenceField({
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, 3);
       width = rect.width;
       height = rect.height;
       canvas.width = Math.round(width * dpr);

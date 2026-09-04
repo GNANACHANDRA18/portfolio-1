@@ -69,7 +69,7 @@ export default function Navbar() {
             href="/"
             data-cursor="magnet"
             aria-label={`${site.shortName} — home`}
-            className={`group flex items-center gap-2.5 rounded-full px-3.5 py-2.5 transition-all duration-500 ${
+            className={`group flex items-center gap-2.5 rounded-full px-3 py-2.5 transition-all duration-500 sm:px-3.5 ${
               scrolled || open
                 ? 'glass shadow-[0_10px_36px_-22px_rgba(0,0,0,0.85)]'
                 : 'border border-transparent'
@@ -83,7 +83,7 @@ export default function Navbar() {
                 className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-linear-to-r from-transparent via-accent to-transparent transition-transform duration-700 ease-out-expo group-hover:scale-x-100"
               />
             </span>
-            <span className="hidden font-mono text-[11px] tracking-[0.18em] text-fg uppercase sm:block">
+            <span className="font-mono text-[10px] tracking-[0.16em] text-fg uppercase sm:text-[11px] sm:tracking-[0.18em]">
               Gnana Chandra
             </span>
           </Link>
@@ -182,9 +182,9 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-[75] bg-bg/94 backdrop-blur-2xl"
+            className="fixed inset-0 z-[75] overflow-y-auto overscroll-contain bg-bg/94 backdrop-blur-2xl"
           >
-            <div className="container-x flex h-full flex-col justify-center pt-24 pb-12">
+            <div className="container-x flex min-h-full flex-col justify-center pt-24 pb-12">
               <div className="grid gap-10 md:grid-cols-3 md:gap-8">
                 {grouped.map((section, gi) => (
                   <div key={section.group}>
