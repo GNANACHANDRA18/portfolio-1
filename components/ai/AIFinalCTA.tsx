@@ -41,10 +41,14 @@ export default function AIFinalCTA() {
       <motion.div
         aria-hidden
         className="pointer-events-none absolute inset-0"
+        // Off is the same gradient with no tint in it, not the `transparent`
+        // keyword: motion cannot interpolate a gradient against the browser's
+        // background shorthand, and silently drops the animation when asked.
+        initial={{ background: `radial-gradient(60% 55% at 50% 45%, transparent, transparent 72%)` }}
         animate={{
           background: current
             ? `radial-gradient(60% 55% at 50% 45%, color-mix(in oklab, ${current.tint} 16%, transparent), transparent 72%)`
-            : 'transparent',
+            : `radial-gradient(60% 55% at 50% 45%, transparent, transparent 72%)`,
         }}
         transition={{ duration: 0.6 }}
       />

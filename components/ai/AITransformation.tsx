@@ -48,6 +48,20 @@ const LAYOUTS: Record<string, (i: number) => { x: number; y: number }> = {
   }),
 };
 
+/**
+ * Node and the browser round `Math.sin`/`Math.cos` differently in the last
+ * bits, so an unrounded coordinate reaches the DOM as 38.59551168674807 on
+ * the server and 38.59551168690086 on the client — a hydration mismatch on
+ * every one of the 28 points, which React reports and does not patch up.
+ * Four decimals is far finer than a 100-unit viewBox can show.
+ */
+const round = (n: number) => Math.round(n * 1e4) / 1e4;
+
+const layoutFor = (id: string, i: number) => {
+  const { x, y } = LAYOUTS[id](i);
+  return { x: round(x), y: round(y) };
+};
+
 const TINTS = [
   'var(--color-ai-cyan)',
   'var(--color-ai-blue)',
@@ -76,7 +90,7 @@ export default function AITransformation() {
   });
 
   const current = transformStages[stage];
-  const layout = LAYOUTS[current.id];
+  const layout = (i: number) => layoutFor(current.id, i);
 
   return (
     <div ref={ref} className="relative h-[560vh]">

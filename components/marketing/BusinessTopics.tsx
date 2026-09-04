@@ -28,10 +28,14 @@ export default function BusinessTopics() {
       <motion.div
         aria-hidden
         className="pointer-events-none absolute -inset-x-10 -inset-y-16"
+        // Off is the same gradient with no tint in it, not the `transparent`
+        // keyword: motion cannot interpolate a gradient against the browser's
+        // background shorthand, and silently drops the animation when asked.
+        initial={{ background: `radial-gradient(58% 54% at 50% 45%, transparent, transparent 72%)` }}
         animate={{
           background: current
             ? `radial-gradient(58% 54% at 50% 45%, color-mix(in oklab, ${tint} 15%, transparent), transparent 72%)`
-            : 'transparent',
+            : `radial-gradient(58% 54% at 50% 45%, transparent, transparent 72%)`,
         }}
         transition={{ duration: 0.6 }}
       />
