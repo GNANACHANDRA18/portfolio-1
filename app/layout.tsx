@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -12,17 +12,25 @@ import AmbientBackground from '@/components/AmbientBackground';
 import { site } from '@/data/site';
 import { personJsonLd } from '@/lib/seo';
 
-const inter = Inter({
-  subsets: ['latin'],
+// Self-hosted rather than `next/font/google`: the production image builds with no
+// outbound network, so fetching these from Google Fonts fails the build. The files
+// are the same latin-subset variable woff2 Google serves, committed under app/fonts.
+const inter = localFont({
+  src: './fonts/Inter-Variable-latin.woff2',
   variable: '--font-inter',
   display: 'swap',
+  weight: '100 900',
+  style: 'normal',
+  fallback: ['ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
 });
 
-const jetbrains = JetBrains_Mono({
-  subsets: ['latin'],
+const jetbrains = localFont({
+  src: './fonts/JetBrainsMono-Variable-latin.woff2',
   variable: '--font-mono-jb',
   display: 'swap',
-  weight: ['400', '500'],
+  weight: '400 500',
+  style: 'normal',
+  fallback: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
 });
 
 export const metadata: Metadata = {
